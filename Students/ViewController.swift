@@ -42,7 +42,9 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
+        //self.hideKeyboardWhenTappedAround()
+        //Hide keyboard when drag tableView
+        tableView.keyboardDismissMode = .onDrag
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "StudentCell") // Need to register every reuse indetifier of cell in tableview
         searchBar.delegate = self
@@ -88,17 +90,19 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
 
     
 //Extension for hide keyboard when tapping around
-extension UIViewController{
-       
-    func hideKeyboardWhenTappedAround(){
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-        tap.cancelsTouchesInView = false
-        view.addGestureRecognizer(tap)
-           
-    }
-       
-    @objc func dismissKeyboard(){
-           view.endEditing(true)
-       }
-   }
+//Put searchBar to navBar and it's don't work
+//Try through searchController
+//extension UIViewController{
+//
+//    func hideKeyboardWhenTappedAround(){
+//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+//        tap.cancelsTouchesInView = false
+//        view.addGestureRecognizer(tap)
+//
+//    }
+//
+//    @objc func dismissKeyboard(){
+//           view.endEditing(true)
+//       }
+//   }
    
