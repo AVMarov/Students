@@ -15,8 +15,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <searchBar contentMode="redraw" restorationIdentifier="searchBar" translatesAutoresizingMaskIntoConstraints="NO" id="EMx-jy-A9T">
+                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q5E-vi-xf1">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="718"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="StudentCell" textLabel="MHp-df-mEm" style="IBUITableViewCellStyleDefault" id="ajj-kh-QOv">
@@ -45,15 +49,19 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="Q5E-vi-xf1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="2Hl-K7-PI4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Q5E-vi-xf1" secondAttribute="bottom" id="7aO-IU-kg4"/>
+                            <constraint firstItem="EMx-jy-A9T" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="A4f-LP-ZGx"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Q5E-vi-xf1" secondAttribute="trailing" id="F31-T0-0Zp"/>
-                            <constraint firstItem="Q5E-vi-xf1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="RRn-Fj-DJ5"/>
-                            <constraint firstItem="Q5E-vi-xf1" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="wce-i0-dba"/>
+                            <constraint firstItem="EMx-jy-A9T" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ult-Nk-thB"/>
+                            <constraint firstItem="Q5E-vi-xf1" firstAttribute="top" secondItem="EMx-jy-A9T" secondAttribute="bottom" id="ca7-LK-cmX"/>
+                            <constraint firstItem="EMx-jy-A9T" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="h5R-0J-HIv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Студенты" id="PVQ-0M-ave"/>
                     <connections>
+                        <outlet property="searchBar" destination="EMx-jy-A9T" id="5nT-fC-m2G"/>
                         <outlet property="tableView" destination="Q5E-vi-xf1" id="c8P-PM-TtX"/>
                     </connections>
                 </viewController>
