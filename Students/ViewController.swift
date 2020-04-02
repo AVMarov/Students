@@ -35,29 +35,36 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         Student(name: "Егор", surname: "Егоров", age: 25, rating: 9),
         Student(name: "Константин", surname: "Орлов", age: 26, rating: 6),
         Student(name: "Андерей", surname: "Лебедев", age: 27, rating: 7)
-        ].sorted(by: { $1.getFullName() > $0.getFullName() })
+        ].sorted(by: { $1.fullname > $0.fullname })
     // Сортировка по полному имени, если только по фамилии, то имена в случайном порядке
     
     var filteredData = [Student]() //Don't need to force unwrap here
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self        
-        searchBar.delegate = self
+        self.hideKeyboardWhenTappedAround()
+        tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "StudentCell") // Need to register every reuse indetifier of cell in tableview
+        searchBar.delegate = self
+        searchBar.sizeToFit()
+        navigationItem.titleView = searchBar
         filteredData = students
     }
     
+   
+    //Number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return filteredData.count
     }
     
+    //Add cells to tableView and set textLabel to cells
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell", for: indexPath)
-        cell.textLabel?.text = filteredData[indexPath.row].getFullName()
+        cell.textLabel?.text = filteredData[indexPath.row].fullname
         return cell
     }
     
+    //Search implementation
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredData = searchText.isEmpty ? students : students.filter {
             $0.fullname.range(of: searchText,
@@ -68,4 +75,30 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         
         tableView.reloadData()
     }
+    
+    //Hide keyboard when click to search button
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
+    
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.endEditing(true)
+//    }
 }
+
+    
+//Extension for hide keyboard when tapping around
+extension UIViewController{
+       
+    func hideKeyboardWhenTappedAround(){
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+           
+    }
+       
+    @objc func dismissKeyboard(){
+           view.endEditing(true)
+       }
+   }
+   

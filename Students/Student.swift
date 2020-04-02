@@ -11,12 +11,6 @@ struct Student {
     var age: Int
     var rating: Int
     
-    func getFullName() -> String{
-        return "\(surname) \(name)"
-    }
-
-    //Better to use computed property
-
     var fullname: String {
         return "\(surname) \(name)"
     }
