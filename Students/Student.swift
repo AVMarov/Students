@@ -14,4 +14,10 @@ struct Student {
     func getFullName() -> String{
         return "\(surname) \(name)"
     }
+
+    //Better to use computed property
+
+    var fullname: String {
+        return "\(surname) \(name)"
+    }
 }
