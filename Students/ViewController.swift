@@ -60,6 +60,7 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
         
         filteredData = searchText.isEmpty ? students : students.filter { (item: Student) -> Bool in
+            //return item.getFullName().range(of: searchText) != nil
             return item.getFullName().range(of: searchText, options: .caseInsensitive, range: nil, locale: nil) != nil
         }
         
