@@ -10,4 +10,8 @@ struct Students {
     var surname: String
     var age: Int
     var rating: Int
+    
+    func getFullName() -> String{
+        return "\(surname) \(name)"
+    }
 }
