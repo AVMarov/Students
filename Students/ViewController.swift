@@ -17,26 +17,46 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchResultsUp
     
     //Студенты, все персонажи вымышлены любые совпадения случайны
     let students = [
-        Student(name: "Иван", surname: "Иванов", age: 18, rating: 10),
-        Student(name: "Петр", surname: "Смирнов", age: 19, rating: 9),
-        Student(name: "Алексей", surname: "Сидоров", age: 20, rating: 8),
-        Student(name: "Александр", surname: "Петров", age: 21, rating: 7),
-        Student(name: "Владимир", surname: "Кузнецов", age: 22, rating: 6),
-        Student(name: "Петр", surname: "Иванов", age: 23, rating: 5),
-        Student(name: "Владимир", surname: "Смирнов", age: 24, rating: 4),
-        Student(name: "Александр", surname: "Сидоров", age: 25, rating: 9),
-        Student(name: "Алексей", surname: "Петров", age: 26, rating: 6),
-        Student(name: "Иван", surname: "Кузнецов", age: 27, rating: 7),
-        Student(name: "Константин", surname: "Соколов", age: 28, rating: 10),
-        Student(name: "Андрей", surname: "Михайлов", age: 29, rating: 9),
-        Student(name: "Дмитрий", surname: "Егоров", age: 30, rating: 8),
-        Student(name: "Денис", surname: "Орлов", age: 21, rating: 7),
-        Student(name: "Борис", surname: "Лебедев", age: 22, rating: 6),
-        Student(name: "Олег", surname: "Соколов", age: 23, rating: 5),
-        Student(name: "Глеб", surname: "Михайлов", age: 24, rating: 4),
-        Student(name: "Егор", surname: "Егоров", age: 25, rating: 9),
-        Student(name: "Константин", surname: "Орлов", age: 26, rating: 6),
-        Student(name: "Андерей", surname: "Лебедев", age: 27, rating: 7)
+        Student(name: "Иван", surname: "Иванов", gender: "Муж", profile: "www.google.com"),
+        Student(name: "Петр", surname: "Смирнов", gender: "Муж"),
+        Student(name: "Алексей", surname: "Сидоров", gender: "Муж"),
+        Student(name: "Александр", surname: "Петров", gender: "Муж"),
+        Student(name: "Владимир", surname: "Кузнецов", gender: "Муж"),
+        Student(name: "Петр", surname: "Иванов", gender: "Муж"),
+        Student(name: "Владимир", surname: "Смирнов", gender: "Муж"),
+        Student(name: "Александр", surname: "Сидоров", gender: "Муж"),
+        Student(name: "Алексей", surname: "Петров", gender: "Муж"),
+        Student(name: "Иван", surname: "Кузнецов", gender: "Муж"),
+        Student(name: "Константин", surname: "Соколов", gender: "Муж"),
+        Student(name: "Андрей", surname: "Михайлов", gender: "Муж"),
+        Student(name: "Дмитрий", surname: "Егоров", gender: "Муж"),
+        Student(name: "Денис", surname: "Орлов", gender: "Муж"),
+        Student(name: "Борис", surname: "Лебедев", gender: "Муж"),
+        Student(name: "Олег", surname: "Соколов", gender: "Муж"),
+        Student(name: "Глеб", surname: "Михайлов", gender: "Муж"),
+        Student(name: "Егор", surname: "Егоров", gender: "Муж"),
+        Student(name: "Константин", surname: "Орлов", gender: "Муж"),
+        Student(name: "Андерей", surname: "Лебедев", gender: "Муж"),
+        Student(name: "Мария", surname: "Иванова", gender: "Жен"),
+        Student(name: "Ирина", surname: "Смирнова", gender: "Жен"),
+        Student(name: "Светлана", surname: "Сидорова", gender: "Жен"),
+        Student(name: "Екатерина", surname: "Петрова", gender: "Жен"),
+        Student(name: "Елизавета", surname: "Кузнецова", gender: "Жен"),
+        Student(name: "Анастасия", surname: "Иванова", gender: "Жен"),
+        Student(name: "Кристина", surname: "Смирнова", gender: "Жен"),
+        Student(name: "Ольга", surname: "Сидорова", gender: "Жен"),
+        Student(name: "Юлия", surname: "Петрова", gender: "Жен"),
+        Student(name: "Елена", surname: "Кузнецова", gender: "Жен"),
+        Student(name: "Анна", surname: "Соколова", gender: "Жен"),
+        Student(name: "Алина", surname: "Михайлова", gender: "Жен"),
+        Student(name: "Ольга", surname: "Егорова", gender: "Жен"),
+        Student(name: "Светлана", surname: "Орлова", gender: "Жен"),
+        Student(name: "Юлия", surname: "Лебедева", gender: "Жен"),
+        Student(name: "Екатерина", surname: "Соколова", gender: "Жен"),
+        Student(name: "Елизавета", surname: "Михайлова", gender: "Жен"),
+        Student(name: "Мария", surname: "Егорова", gender: "Жен"),
+        Student(name: "Кристина", surname: "Орлова", gender: "Жен"),
+        Student(name: "Анастасия", surname: "Лебедева", gender: "Жен", profile: "www.apple.com")
         ].sorted(by: { $1.fullname > $0.fullname })
     // Сортировка по полному имени, если только по фамилии, то имена в случайном порядке
     
@@ -45,20 +65,27 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchResultsUp
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "StudentCell") // Need to register every reuse indetifier of cell in tableview
                 
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.sizeToFit()
         
-        navigationItem.titleView = searchController.searchBar
-        searchController.hidesNavigationBarDuringPresentation = false
-        
+        tableView.tableHeaderView = searchController.searchBar
+    
+        definesPresentationContext = true
         filteredData = students
+        
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Фильтры",
+//                                                            style: .plain,
+//                                                            target: self,
+//                                                            action: #selector(pushRightBarButtonItem))
     }
-   
+
+    
     //Number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return filteredData.count
@@ -83,6 +110,16 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchResultsUp
             tableView.reloadData()
         }
     }
+  
+    
+//Try to present viewControllersFilters onto ViewController
+//    @objc func pushRightBarButtonItem(){
+//        let viewControllerFilters = ViewControllerFilters(nibName: "ViewControllerFilters", bundle: nil)
+//
+//        self.present(viewControllerFilters,
+//                     animated: true,
+//                     completion: nil)
+//    }
 }
 
     
