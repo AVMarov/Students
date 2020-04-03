@@ -8,10 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UISearchResultsUpdating {
+       
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    
+    var searchController: UISearchController!
     
     //Студенты, все персонажи вымышлены любые совпадения случайны
     let students = [
@@ -42,17 +44,20 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.hideKeyboardWhenTappedAround()
-        //Hide keyboard when drag tableView
-        tableView.keyboardDismissMode = .onDrag
+        
         tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "StudentCell") // Need to register every reuse indetifier of cell in tableview
-        searchBar.delegate = self
-        searchBar.sizeToFit()
-        navigationItem.titleView = searchBar
+                
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = true
+        searchController.searchBar.sizeToFit()
+        
+        navigationItem.titleView = searchController.searchBar
+        searchController.hidesNavigationBarDuringPresentation = false
+        
         filteredData = students
     }
-    
    
     //Number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -67,42 +72,19 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     }
     
     //Search implementation
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredData = searchText.isEmpty ? students : students.filter {
-            $0.fullname.range(of: searchText,
-                              options: .caseInsensitive,
-                              range: nil,
-                              locale: nil) != nil //Better like this
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            filteredData = searchText.isEmpty ? students : students.filter {
+                $0.fullname.range(of: searchText,
+                                  options: .caseInsensitive,
+                                  range: nil,
+                                  locale: nil) != nil
+            }
+            tableView.reloadData()
         }
-        
-        tableView.reloadData()
     }
-    
-    //Hide keyboard when click to search button
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.endEditing(true)
-    }
-    
-//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-//        searchBar.endEditing(true)
-//    }
 }
 
     
-//Extension for hide keyboard when tapping around
-//Put searchBar to navBar and it's don't work
-//Try through searchController
-//extension UIViewController{
-//
-//    func hideKeyboardWhenTappedAround(){
-//        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
-//        tap.cancelsTouchesInView = false
-//        view.addGestureRecognizer(tap)
-//
-//    }
-//
-//    @objc func dismissKeyboard(){
-//           view.endEditing(true)
-//       }
-//   }
+
    
