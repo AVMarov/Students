@@ -11,7 +11,8 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: UISearchBar!     
+    @IBOutlet weak var filtersButton: UIButton!
     
     //Студенты, все персонажи вымышлены любые совпадения случайны
     let students = [
@@ -72,6 +73,9 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         searchBar.sizeToFit()
         
         filteredData = students
+        
+        
+        filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
     }
     
     //Number of row in table
@@ -118,5 +122,12 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     //Dismiss cancel button when searchBar is no active
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
+    }
+    
+    @objc func openFilterViewController(){
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let filterViewController = storyboard.instantiateViewController(withIdentifier: "FilterViewController") as? FilterViewController
+        
+        self.present(filterViewController!, animated: true, completion: nil)
     }
 }

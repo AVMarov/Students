@@ -14,6 +14,8 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var onlyMaleSwitch: UISwitch!
     @IBOutlet weak var onlyFemaleSwitch: UISwitch!
     
+    @IBOutlet weak var applyButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,12 +26,18 @@ class FilterViewController: UIViewController {
     }
     
     @IBAction func onlyMaleSwitchOn(_ sender: UISwitch) {
-        onlyFemaleSwitch.isOn = false
+        onlyFemaleSwitch.setOn(false, animated: true)
     }
     
     @IBAction func onlyFemaleSwitchOn(_ sender: UISwitch) {
-        onlyMaleSwitch.isOn = false
+        onlyMaleSwitch.setOn(false, animated: true)
     }
+    
+    
+    @IBAction func applyFilters(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 
