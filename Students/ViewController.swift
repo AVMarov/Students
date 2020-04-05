@@ -16,46 +16,46 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     
     //Студенты, все персонажи вымышлены любые совпадения случайны
     let students = [
-        Student(name: "Иван", surname: "Иванов", gender: "Муж", profile: "www.google.com"),
-        Student(name: "Петр", surname: "Смирнов", gender: "Муж"),
-        Student(name: "Алексей", surname: "Сидоров", gender: "Муж"),
-        Student(name: "Александр", surname: "Петров", gender: "Муж"),
-        Student(name: "Владимир", surname: "Кузнецов", gender: "Муж"),
-        Student(name: "Петр", surname: "Иванов", gender: "Муж"),
-        Student(name: "Владимир", surname: "Смирнов", gender: "Муж"),
-        Student(name: "Александр", surname: "Сидоров", gender: "Муж"),
-        Student(name: "Алексей", surname: "Петров", gender: "Муж"),
-        Student(name: "Иван", surname: "Кузнецов", gender: "Муж"),
-        Student(name: "Константин", surname: "Соколов", gender: "Муж"),
-        Student(name: "Андрей", surname: "Михайлов", gender: "Муж"),
-        Student(name: "Дмитрий", surname: "Егоров", gender: "Муж"),
-        Student(name: "Денис", surname: "Орлов", gender: "Муж"),
-        Student(name: "Борис", surname: "Лебедев", gender: "Муж"),
-        Student(name: "Олег", surname: "Соколов", gender: "Муж"),
-        Student(name: "Глеб", surname: "Михайлов", gender: "Муж"),
-        Student(name: "Егор", surname: "Егоров", gender: "Муж"),
-        Student(name: "Константин", surname: "Орлов", gender: "Муж"),
-        Student(name: "Андерей", surname: "Лебедев", gender: "Муж"),
-        Student(name: "Мария", surname: "Иванова", gender: "Жен"),
-        Student(name: "Ирина", surname: "Смирнова", gender: "Жен"),
-        Student(name: "Светлана", surname: "Сидорова", gender: "Жен"),
-        Student(name: "Екатерина", surname: "Петрова", gender: "Жен"),
-        Student(name: "Елизавета", surname: "Кузнецова", gender: "Жен"),
-        Student(name: "Анастасия", surname: "Иванова", gender: "Жен"),
-        Student(name: "Кристина", surname: "Смирнова", gender: "Жен"),
-        Student(name: "Ольга", surname: "Сидорова", gender: "Жен"),
-        Student(name: "Юлия", surname: "Петрова", gender: "Жен"),
-        Student(name: "Елена", surname: "Кузнецова", gender: "Жен"),
-        Student(name: "Анна", surname: "Соколова", gender: "Жен"),
-        Student(name: "Алина", surname: "Михайлова", gender: "Жен"),
-        Student(name: "Ольга", surname: "Егорова", gender: "Жен"),
-        Student(name: "Светлана", surname: "Орлова", gender: "Жен"),
-        Student(name: "Юлия", surname: "Лебедева", gender: "Жен"),
-        Student(name: "Екатерина", surname: "Соколова", gender: "Жен"),
-        Student(name: "Елизавета", surname: "Михайлова", gender: "Жен"),
-        Student(name: "Мария", surname: "Егорова", gender: "Жен"),
-        Student(name: "Кристина", surname: "Орлова", gender: "Жен"),
-        Student(name: "Анастасия", surname: "Лебедева", gender: "Жен", profile: "www.apple.com")
+        Student(name: "Иван", surname: "Иванов", gender: true, profile: "www.google.com"),
+        Student(name: "Петр", surname: "Смирнов", gender: true),
+        Student(name: "Алексей", surname: "Сидоров", gender: true),
+        Student(name: "Александр", surname: "Петров", gender: true),
+        Student(name: "Владимир", surname: "Кузнецов", gender: true),
+        Student(name: "Петр", surname: "Иванов", gender: true),
+        Student(name: "Владимир", surname: "Смирнов", gender: true),
+        Student(name: "Александр", surname: "Сидоров", gender: true),
+        Student(name: "Алексей", surname: "Петров", gender: true),
+        Student(name: "Иван", surname: "Кузнецов", gender: true),
+        Student(name: "Константин", surname: "Соколов", gender: true),
+        Student(name: "Андрей", surname: "Михайлов", gender: true),
+        Student(name: "Дмитрий", surname: "Егоров", gender: true),
+        Student(name: "Денис", surname: "Орлов", gender: true),
+        Student(name: "Борис", surname: "Лебедев", gender: true),
+        Student(name: "Олег", surname: "Соколов", gender: true),
+        Student(name: "Глеб", surname: "Михайлов", gender: true),
+        Student(name: "Егор", surname: "Егоров", gender: true),
+        Student(name: "Константин", surname: "Орлов", gender: true),
+        Student(name: "Андерей", surname: "Лебедев", gender: true),
+        Student(name: "Мария", surname: "Иванова", gender: false),
+        Student(name: "Ирина", surname: "Смирнова", gender: false),
+        Student(name: "Светлана", surname: "Сидорова", gender: false),
+        Student(name: "Екатерина", surname: "Петрова", gender: false),
+        Student(name: "Елизавета", surname: "Кузнецова", gender: false),
+        Student(name: "Анастасия", surname: "Иванова", gender: false),
+        Student(name: "Кристина", surname: "Смирнова", gender: false),
+        Student(name: "Ольга", surname: "Сидорова", gender: false),
+        Student(name: "Юлия", surname: "Петрова", gender: false),
+        Student(name: "Елена", surname: "Кузнецова", gender: false),
+        Student(name: "Анна", surname: "Соколова", gender: false),
+        Student(name: "Алина", surname: "Михайлова", gender: false),
+        Student(name: "Ольга", surname: "Егорова", gender: false),
+        Student(name: "Светлана", surname: "Орлова", gender: false),
+        Student(name: "Юлия", surname: "Лебедева", gender: false),
+        Student(name: "Екатерина", surname: "Соколова", gender: false),
+        Student(name: "Елизавета", surname: "Михайлова", gender: false),
+        Student(name: "Мария", surname: "Егорова", gender: false),
+        Student(name: "Кристина", surname: "Орлова", gender: false),
+        Student(name: "Анастасия", surname: "Лебедева", gender: false, profile: "www.apple.com")
         ].sorted(by: { $1.fullname > $0.fullname })
     // Сортировка по полному имени, если только по фамилии, то имена в случайном порядке
     
@@ -74,8 +74,9 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         
         filteredData = students
         
-        
         filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
+        
+        self.filterTheData(onlyNerds: false, onlyMale: false, onlyFemale: false)
     }
     
     //Number of row in table
@@ -86,7 +87,7 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     //Load data in table
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell", for: indexPath)
-        cell.textLabel?.text = filteredData[indexPath.row].fullname
+        cell.textLabel?.text = filteredData[indexPath.row].fullnameAndRating
         return cell
     }
     
@@ -127,7 +128,23 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     @objc func openFilterViewController(){
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let filterViewController = storyboard.instantiateViewController(withIdentifier: "FilterViewController") as? FilterViewController
-        
+        filterViewController?.instance = self
         self.present(filterViewController!, animated: true, completion: nil)
     }
+    
+    func filterTheData(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool) {
+        switch true{
+        
+        case onlyNerds && !onlyMale && !onlyFemale: filteredData = students.filter { $0.rating >= 4.5 }
+        case onlyMale: filteredData = students.filter { $0.gender == true}
+        case onlyFemale: filteredData = students.filter { $0.gender == false }
+        case onlyNerds && onlyMale: filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
+        case onlyNerds && onlyFemale: filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
+       
+        default: filteredData = students
+        }
+        tableView.reloadData()
+    }
+    
+    //try pass data through delegates
 }

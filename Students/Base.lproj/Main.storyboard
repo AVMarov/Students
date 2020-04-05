@@ -190,6 +190,7 @@
                         <outlet property="OnlyMaleSwitch" destination="oEt-uF-HXQ" id="6WZ-w5-cQQ"/>
                         <outlet property="applyButton" destination="4UR-th-4ZY" id="ocx-Ec-d6c"/>
                         <outlet property="onlyFemaleSwitch" destination="smw-dX-GzH" id="oUI-si-XoA"/>
+                        <outlet property="onlyMaleSwitch" destination="oEt-uF-HXQ" id="2Zi-5y-0OT"/>
                         <outlet property="onlyNerdsSwitch" destination="wdx-lN-Bnw" id="6IO-zf-Xxx"/>
                     </connections>
                 </viewController>

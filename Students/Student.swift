@@ -8,7 +8,7 @@
 struct Student {
     var name: String
     var surname: String
-    var gender: String
+    var gender: Bool
     var profile: String?
         
     var age: Int {
@@ -23,7 +23,11 @@ struct Student {
         return "\(surname) \(name)"
     }
     
-    init(name: String, surname: String, gender: String, profile: String? = nil){
+    var fullnameAndRating: String {
+        return "\(fullname) " + String(format: "%.02f", rating)
+    }
+    
+    init(name: String, surname: String, gender: Bool, profile: String? = nil){
         self.name = name
         self.surname = surname
         self.gender = gender
