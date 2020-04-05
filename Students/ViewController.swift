@@ -38,34 +38,65 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         ].sorted(by: { $1.getFullName() > $0.getFullName() })
     // Сортировка по полному имени, если только по фамилии, то имена в случайном порядке
     
-    var filteredData = [Student]() //Don't need to force unwrap here
+    var filteredData = [Student]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         tableView.dataSource = self        
         searchBar.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "StudentCell") // Need to register every reuse indetifier of cell in tableview
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "StudentCell")
+        tableView.keyboardDismissMode = .onDrag
+        
+        searchBar.delegate = self
+        searchBar.sizeToFit()
+        
         filteredData = students
     }
     
+    //Number of row in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return filteredData.count
     }
     
+    //Load data in table
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell", for: indexPath)
         cell.textLabel?.text = filteredData[indexPath.row].getFullName()
         return cell
     }
     
+    //Search
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredData = searchText.isEmpty ? students : students.filter {
             $0.fullname.range(of: searchText,
                               options: .caseInsensitive,
                               range: nil,
-                              locale: nil) != nil //Better like this
+                              locale: nil) != nil
         }
-        
         tableView.reloadData()
+    }
+    
+    //Show cancel button when seachBar is active
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+    }
+    
+    //Hide keyboard when clicked search button
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
+    
+    //Hide keyboard and clear text in searchBar and show full list of data when clicked cancel button
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.endEditing(true)
+        filteredData = students
+        tableView.reloadData()
+    }
+    
+    //Dismiss cancel button when searchBar is no active
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
     }
 }
