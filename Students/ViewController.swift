@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, WKNavigationDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!     
@@ -62,9 +62,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // Сортировка по полному имени, если только по фамилии, то имена в случайном порядке
     
     var filteredData = [Student]()
-    
+    var webView: WKWebView!
     //var webView = WKWebView()
     // var filterViewController: FilterViewController?
+    override func loadView() {
+        webView = WKWebView()
+        webView.navigationDelegate = self
+        view = webView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,20 +85,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
         
-        //webView = WKWebView()
-        // self.filterTheData( false, false, false)
-        // webView.navigationDelegate = self
+//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: <#T##UIBarButtonItem.Style#>, target: <#T##Any?#>, action: <#T##Selector?#>)
     }
     
-//        override func loadView() {
-//            //webView = WKWebView()
-//            //webView.navigationDelegate = self
-//            self.view = webView
-//        }
-    
-    //    func webView(_ webView: WKWebView, didP: WKNavigation!) {
-    //        title = webView.title
-    //    }
+
     
     //Number of row in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -108,36 +103,46 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        showAlert(index: indexPath.row)
+        showActionList(index: indexPath.row)
     }
     
-    func showAlert(index: Int){
+    func showActionList(index: Int){
             let actionList  = UIAlertController(title: "Выберите действие", message: nil, preferredStyle: .actionSheet)
-        let showProfile = UIAlertAction(title: "Профиль в соц сетях", style: .default)
+        actionList.addAction(UIAlertAction(title: "Профиль в соц сетях", style: .default)
         { (action) in
             if let profile = self.filteredData[index].profile{
-//                self.webView.load(URLRequest(url: URL(string: profile)!))
-//                self.loadView()
-                
                 let alertProfileController = UIAlertController(title: nil, message: profile , preferredStyle: .alert)
                 let ok = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
                 alertProfileController.addAction(ok)
                 self.present(alertProfileController, animated: true, completion: nil)
             }else{
-                let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
-                let ok = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
-                alertController.addAction(ok)
-                self.present(alertController, animated: true, completion: nil)
+                self.showAlert()
+//                let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
+//                let ok = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
+//                alertController.addAction(ok)
+//                self.present(alertController, animated: true, completion: nil)
             }
-        }
-        let showData = UIAlertAction(title: "Посмотреть данные", style: .default, handler: nil)
-        let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
-        actionList.addAction(showProfile)
-        actionList.addAction(showData)
-        actionList.addAction(cancel)
+        })
+        
+        actionList.addAction(UIAlertAction(title: "Посмотреть данные", style: .default)
+        { (action) in
+            
+        })
+        actionList.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         present(actionList, animated: true, completion: nil)
     }
    
+    func showAlert(){
+        let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ок", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func editData(){
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
+        self.present(filterViewController!, animated: true, completion: nil)
+    }
     
     //Search
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -177,7 +182,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let filterViewController = storyboard.instantiateViewController(withIdentifier: "FilterViewController") as? FilterViewController
         filterViewController?.filtersDelegate = self
-        //filterViewController?.instance = self
         self.present(filterViewController!, animated: true, completion: nil)
     }
     
@@ -201,47 +205,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 }
 
 extension ViewController: ApplyFiltersDelegate{
-//    var onlyNerds: Bool {
-//        get {
-//            self.onlyNerds
-//        }
-//        set(newValue) {
-//            self.onlyNerds = newValue
-//        }
-//    }
-//
-//    var onlyMale: Bool {
-//        get {
-//            self.onlyMale
-//        }
-//        set(newValue) {
-//            self.onlyMale = newValue
-//        }
-//    }
-//
-//    var onlyFemale: Bool {
-//        get {
-//            self.onlyFemale
-//        }
-//        set(newValue) {
-//            self.onlyFemale = newValue
-//        }
-//    }
-    
-    
     func applyfilters(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool) {
-//        self.onlyNerds = onlyNerds
-//        self.onlyMale = onlyMale
-//        self.onlyFemale = onlyFemale
         filterTheData(onlyNerds, onlyMale, onlyFemale)
     }
 }
 
-//extension WKWebView {
-//    func load(_ urlString: String){
-//        if let url = URL(string: urlString){
-//            let request = URLRequest(url: url)
-//            load(request)
-//        }
-//    }
-//}

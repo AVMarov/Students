@@ -25,39 +25,62 @@ class FilterViewController: UIViewController {
     
     @IBOutlet weak var applyButton: UIButton!
     
+    
     var filtersDelegate: ApplyFiltersDelegate!
-//    var onlyNerds = false
-//    var onlyMale = false
-//    var onlyFemale = false
-//
+    var onlyNerds = Bool()
+    var onlyMale = Bool()
+    var onlyFemale = Bool()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-//        onlyNerdsSwitch.isOn = filtersDelegate.onlyNerds
-//        onlyMaleSwitch.isOn = filtersDelegate.onlyMale
-//        onlyFemaleSwitch.isOn = filtersDelegate.onlyFemale
     }
     
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        onlyNerdsSwitch.setOn(onlyNerds, animated: true)
+//       onlyMaleSwitch.setOn(onlyMale, animated: true)
+//        onlyFemaleSwitch.setOn(onlyFemale, animated: true)
+//        onlyNerdsSwitch.isOn = onlyNerds
+//        onlyMaleSwitch.isOn = onlyMale
+//        onlyFemaleSwitch.isOn = onlyFemale
+//    }
+    
     @IBAction func onlyNerdsSwitchOn(_ sender: UISwitch) {
-        onlyNerdsSwitch.setOn(true, animated: true)
+        self.onlyNerds = true
+        //onlyNerdsSwitch.setOn(true, animated: true)
        // filtersDelegate.onlyNerds = true
     }
     
     @IBAction func onlyMaleSwitchOn(_ sender: UISwitch) {
-        onlyMaleSwitch.setOn(true, animated: true)
+        self.onlyMale = true
+        //onlyMaleSwitch.setOn(true, animated: true)
        // filtersDelegate.onlyMale = true
         onlyFemaleSwitch.setOn(false, animated: true)
     }
     
     @IBAction func onlyFemaleSwitchOn(_ sender: UISwitch) {
-        onlyFemaleSwitch.setOn(true, animated: true)
+        self.onlyFemale = true
+        //onlyFemaleSwitch.setOn(true, animated: true)
         //filtersDelegate.onlyFemale = true
         onlyMaleSwitch.setOn(false, animated: true)
     }
         
     @IBAction func tapButton(_ sender: UIButton) {
-        filtersDelegate.applyfilters(onlyNerds: onlyNerdsSwitch.isOn, onlyMale: onlyMaleSwitch.isOn, onlyFemale: onlyFemaleSwitch.isOn)
+        filtersDelegate.applyfilters(onlyNerds: self.onlyNerds, onlyMale: self.onlyMale, onlyFemale: self.onlyFemale)
         self.dismiss(animated: true, completion: nil)
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        onlyNerdsSwitch.isOn = onlyNerds
+//        onlyMaleSwitch.isOn = onlyMale
+//        onlyFemaleSwitch.isOn = onlyFemale
+//
+//
+//       onlyNerdsSwitch.setOn(onlyNerds, animated: true)
+//        onlyMaleSwitch.setOn(onlyMale, animated: true)
+//     onlyFemaleSwitch.setOn(onlyFemale, animated: true)
+//        //super.viewDidAppear(animated: true)
+//    }
 
 }
