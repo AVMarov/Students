@@ -108,15 +108,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let actionList  = UIAlertController(title: nil, message: "Выберите действие", preferredStyle: .actionSheet)
+        showAlert(index: indexPath.row)
+    }
+    
+    func showAlert(index: Int){
+            let actionList  = UIAlertController(title: "Выберите действие", message: nil, preferredStyle: .actionSheet)
         let showProfile = UIAlertAction(title: "Профиль в соц сетях", style: .default)
         { (action) in
-            
-            let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
-            let ok = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
-            alertController.addAction(ok)
-            self.present(alertController, animated: true, completion: nil)
-            
+            if let profile = self.filteredData[index].profile{
+                let alertProfileController = UIAlertController(title: nil, message: profile , preferredStyle: .alert)
+                let ok = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
+                alertProfileController.addAction(ok)
+                self.present(alertProfileController, animated: true, completion: nil)
+            }else{
+                let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
+                let ok = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
+                alertController.addAction(ok)
+                self.present(alertController, animated: true, completion: nil)
+            }
         }
         let showData = UIAlertAction(title: "Посмотреть данные", style: .default, handler: nil)
         let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
@@ -125,11 +134,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         actionList.addAction(cancel)
         present(actionList, animated: true, completion: nil)
     }
-    
-    //    func showAlert(){
-    //        let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
-    //        present(alertController, animated: true, completion: nil)
-    //    }
+   
     
     //Search
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
