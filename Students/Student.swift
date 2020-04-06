@@ -10,27 +10,29 @@ struct Student {
     var surname: String
     var gender: Bool
     var profile: String?
-        
+    var rating: Double
+    
     var age: Int {
         return Int.random(in: 18...30)
     }
     
-    var rating: Double {
-        return Double.random(in: 3...5)
-    }
+//    var rating: Double {
+//        return Double.random(in: 3...5)
+//    }
     
     var fullname: String {
         return "\(surname) \(name)"
     }
     
     var fullnameAndRating: String {
-        return "\(fullname) " + String(format: "%.02f", rating)
+        return "\(fullname) \( rating)"
     }
     
-    init(name: String, surname: String, gender: Bool, profile: String? = nil){
+    init(name: String, surname: String, gender: Bool, rating:Double, profile: String? = nil){
         self.name = name
         self.surname = surname
         self.gender = gender
+        self.rating = rating
         self.profile = profile
     }
 }

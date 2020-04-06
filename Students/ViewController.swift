@@ -18,46 +18,46 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     //Студенты, все персонажи вымышлены любые совпадения случайны
     let students = [
-        Student(name: "Иван", surname: "Иванов", gender: true, profile: "https://www.google.com"),
-        Student(name: "Петр", surname: "Смирнов", gender: true),
-        Student(name: "Алексей", surname: "Сидоров", gender: true),
-        Student(name: "Александр", surname: "Петров", gender: true),
-        Student(name: "Владимир", surname: "Кузнецов", gender: true),
-        Student(name: "Петр", surname: "Иванов", gender: true),
-        Student(name: "Владимир", surname: "Смирнов", gender: true),
-        Student(name: "Александр", surname: "Сидоров", gender: true),
-        Student(name: "Алексей", surname: "Петров", gender: true),
-        Student(name: "Иван", surname: "Кузнецов", gender: true),
-        Student(name: "Константин", surname: "Соколов", gender: true),
-        Student(name: "Андрей", surname: "Михайлов", gender: true),
-        Student(name: "Дмитрий", surname: "Егоров", gender: true),
-        Student(name: "Денис", surname: "Орлов", gender: true),
-        Student(name: "Борис", surname: "Лебедев", gender: true),
-        Student(name: "Олег", surname: "Соколов", gender: true),
-        Student(name: "Глеб", surname: "Михайлов", gender: true),
-        Student(name: "Егор", surname: "Егоров", gender: true),
-        Student(name: "Константин", surname: "Орлов", gender: true),
-        Student(name: "Андерей", surname: "Лебедев", gender: true),
-        Student(name: "Мария", surname: "Иванова", gender: false),
-        Student(name: "Ирина", surname: "Смирнова", gender: false),
-        Student(name: "Светлана", surname: "Сидорова", gender: false),
-        Student(name: "Екатерина", surname: "Петрова", gender: false),
-        Student(name: "Елизавета", surname: "Кузнецова", gender: false),
-        Student(name: "Анастасия", surname: "Иванова", gender: false),
-        Student(name: "Кристина", surname: "Смирнова", gender: false),
-        Student(name: "Ольга", surname: "Сидорова", gender: false),
-        Student(name: "Юлия", surname: "Петрова", gender: false),
-        Student(name: "Елена", surname: "Кузнецова", gender: false),
-        Student(name: "Анна", surname: "Соколова", gender: false),
-        Student(name: "Алина", surname: "Михайлова", gender: false),
-        Student(name: "Ольга", surname: "Егорова", gender: false),
-        Student(name: "Светлана", surname: "Орлова", gender: false),
-        Student(name: "Юлия", surname: "Лебедева", gender: false),
-        Student(name: "Екатерина", surname: "Соколова", gender: false),
-        Student(name: "Елизавета", surname: "Михайлова", gender: false),
-        Student(name: "Мария", surname: "Егорова", gender: false),
-        Student(name: "Кристина", surname: "Орлова", gender: false),
-        Student(name: "Анастасия", surname: "Лебедева", gender: false, profile: "https://www.apple.com")
+        Student(name: "Иван", surname: "Иванов", gender: true, rating: 3.0, profile: "https://www.google.com"),
+        Student(name: "Петр", surname: "Смирнов", gender: true, rating: 3.1),
+        Student(name: "Алексей", surname: "Сидоров",gender: true, rating: 3.2),
+        Student(name: "Александр", surname: "Петров",gender: true, rating: 3.3),
+        Student(name: "Владимир", surname: "Кузнецов",gender: true, rating: 3.4),
+        Student(name: "Петр", surname: "Иванов",gender: true, rating: 3.5),
+        Student(name: "Владимир", surname: "Смирнов",gender: true, rating: 3.6),
+        Student(name: "Александр", surname: "Сидоров",gender: true, rating: 3.7),
+        Student(name: "Алексей", surname: "Петров",gender: true, rating: 3.8),
+        Student(name: "Иван", surname: "Кузнецов",gender: true, rating: 3.9),
+        Student(name: "Константин", surname: "Соколов",gender: true, rating: 4.0),
+        Student(name: "Андрей", surname: "Михайлов",gender: true, rating: 4.1),
+        Student(name: "Дмитрий", surname: "Егоров",gender: true, rating: 4.2),
+        Student(name: "Денис", surname: "Орлов",gender: true, rating: 4.3),
+        Student(name: "Борис", surname: "Лебедев",gender: true, rating: 4.4),
+        Student(name: "Олег", surname: "Соколов",gender: true, rating: 4.5),
+        Student(name: "Глеб", surname: "Михайлов",gender: true, rating: 4.6),
+        Student(name: "Егор", surname: "Егоров",gender: true, rating: 4.7),
+        Student(name: "Константин", surname: "Орлов",gender: true, rating: 4.8),
+        Student(name: "Андерей", surname: "Лебедев",gender: true, rating: 4.9),
+        Student(name: "Мария", surname: "Иванова",gender: false, rating: 5.0),
+        Student(name: "Ирина", surname: "Смирнова",gender: false, rating: 3.0),
+        Student(name: "Светлана", surname: "Сидорова",gender: false, rating: 3.1),
+        Student(name: "Екатерина", surname: "Петрова",gender: false, rating: 3.2),
+        Student(name: "Елизавета", surname: "Кузнецова",gender: false, rating: 3.3),
+        Student(name: "Анастасия", surname: "Иванова",gender: false, rating: 3.4),
+        Student(name: "Кристина", surname: "Смирнова",gender: false, rating: 3.5),
+        Student(name: "Ольга", surname: "Сидорова",gender: false, rating: 3.6),
+        Student(name: "Юлия", surname: "Петрова",gender: false, rating: 3.7),
+        Student(name: "Елена", surname: "Кузнецова",gender: false, rating: 3.8),
+        Student(name: "Анна", surname: "Соколова",gender: false, rating: 3.9),
+        Student(name: "Алина", surname: "Михайлова",gender: false, rating: 4.0),
+        Student(name: "Ольга", surname: "Егорова",gender: false, rating: 4.1),
+        Student(name: "Светлана", surname: "Орлова",gender: false, rating: 4.2),
+        Student(name: "Юлия", surname: "Лебедева",gender: false, rating: 4.3),
+        Student(name: "Екатерина", surname: "Соколова",gender: false, rating: 4.4),
+        Student(name: "Елизавета", surname: "Михайлова",gender: false, rating: 4.5),
+        Student(name: "Мария", surname: "Егорова",gender: false, rating: 4.6),
+        Student(name: "Кристина", surname: "Орлова",gender: false, rating: 4.7),
+        Student(name: "Анастасия", surname: "Лебедева",gender: false, rating: 4.8, profile: "https://www.apple.com")
         ].sorted(by: { $1.fullname > $0.fullname })
     // Сортировка по полному имени, если только по фамилии, то имена в случайном порядке
     
@@ -85,11 +85,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         // webView.navigationDelegate = self
     }
     
-    //    override func loadView() {
-    //        //webView = WKWebView()
-    //        //webView.navigationDelegate = self
-    //        self.view = webView
-    //    }
+//        override func loadView() {
+//            //webView = WKWebView()
+//            //webView.navigationDelegate = self
+//            self.view = webView
+//        }
     
     //    func webView(_ webView: WKWebView, didP: WKNavigation!) {
     //        title = webView.title
@@ -116,6 +116,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         let showProfile = UIAlertAction(title: "Профиль в соц сетях", style: .default)
         { (action) in
             if let profile = self.filteredData[index].profile{
+//                self.webView.load(URLRequest(url: URL(string: profile)!))
+//                self.loadView()
+                
                 let alertProfileController = UIAlertController(title: nil, message: profile , preferredStyle: .alert)
                 let ok = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
                 alertProfileController.addAction(ok)
@@ -173,25 +176,65 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @objc func openFilterViewController(){
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let filterViewController = storyboard.instantiateViewController(withIdentifier: "FilterViewController") as? FilterViewController
-        filterViewController?.instance = self
+        filterViewController?.filtersDelegate = self
+        //filterViewController?.instance = self
         self.present(filterViewController!, animated: true, completion: nil)
     }
     
     func filterTheData(_ onlyNerds: Bool, _ onlyMale: Bool, _ onlyFemale: Bool) {
-        switch true{
-            
-        case onlyNerds && !onlyMale && !onlyFemale: filteredData = students.filter { $0.rating >= 4.5 }
-        case onlyMale: filteredData = students.filter { $0.gender == true}
-        case onlyFemale: filteredData = students.filter { $0.gender == false }
-        case onlyNerds && onlyMale: filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
-        case onlyNerds && onlyFemale: filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
-            
-        default: filteredData = students
+        if onlyNerds && !onlyMale && !onlyFemale{
+            filteredData = students.filter { $0.rating >= 4.5 }
+        }else if onlyMale && !onlyNerds{
+            filteredData = students.filter { $0.gender == true }
+        }else if onlyFemale && !onlyNerds{
+            filteredData = students.filter { $0.gender == false }
+        }else if  onlyNerds && onlyMale {
+            filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
+        }else if  onlyNerds && onlyFemale {
+            filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
+        }else{
+            filteredData = students
         }
         tableView.reloadData()
     }
+
+}
+
+extension ViewController: ApplyFiltersDelegate{
+//    var onlyNerds: Bool {
+//        get {
+//            self.onlyNerds
+//        }
+//        set(newValue) {
+//            self.onlyNerds = newValue
+//        }
+//    }
+//
+//    var onlyMale: Bool {
+//        get {
+//            self.onlyMale
+//        }
+//        set(newValue) {
+//            self.onlyMale = newValue
+//        }
+//    }
+//
+//    var onlyFemale: Bool {
+//        get {
+//            self.onlyFemale
+//        }
+//        set(newValue) {
+//            self.onlyFemale = newValue
+//        }
+//    }
     
-    //try pass data through delegates
+    
+    func applyfilters(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool) {
+//        self.onlyNerds = onlyNerds
+//        self.onlyMale = onlyMale
+//        self.onlyFemale = onlyFemale
+        filterTheData(onlyNerds, onlyMale, onlyFemale)
+    }
 }
 
 //extension WKWebView {

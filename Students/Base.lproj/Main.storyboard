@@ -79,6 +79,21 @@
             </objects>
             <point key="canvasLocation" x="1042.0289855072465" y="102.45535714285714"/>
         </scene>
+        <!--Edit Data View Controller-->
+        <scene sceneID="zNv-xc-IWU">
+            <objects>
+                <viewController restorationIdentifier="EditDataViewController" storyboardIdentifier="EditDataViewController" id="sCg-dM-hJ9" customClass="EditDataViewController" customModule="Students" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ROu-aM-A40">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="3Yx-gI-Vp7"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nVA-iW-82R" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2219" y="668"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="e5e-Hf-Y6M">
             <objects>
@@ -149,7 +164,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title=" Применить фильтры"/>
                                         <connections>
-                                            <action selector="applyFilters:" destination="2lW-CZ-8na" eventType="touchUpInside" id="gJX-Ks-eeo"/>
+                                            <action selector="tapButton:" destination="2lW-CZ-8na" eventType="touchUpInside" id="gJX-Ks-eeo"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -196,7 +211,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aTK-5M-8oB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1914" y="-81"/>
+            <point key="canvasLocation" x="2219" y="-220"/>
         </scene>
     </scenes>
 </document>
