@@ -17,34 +17,40 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var applyButton: UIButton!
     
     var instance: ViewController?
+    var onlyNerds = false
+    var onlyMale = false
+    var onlyFemale = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        onlyNerdsSwitch.isOn = false
-        onlyMaleSwitch.isOn = false
-        onlyFemaleSwitch.isOn = false
+        
+        
+        onlyNerdsSwitch.isOn = onlyNerds
+        onlyMaleSwitch.isOn = onlyMale
+        onlyFemaleSwitch.isOn = onlyFemale
     }
     
     @IBAction func onlyNerdsSwitchOn(_ sender: UISwitch) {
         //onlyNerdsSwitch.setOn(true, animated: true)
-        onlyNerdsSwitch.isOn = true
+       onlyNerds = true
     }
     
     @IBAction func onlyMaleSwitchOn(_ sender: UISwitch) {
         //onlyMaleSwitch.setOn(true, animated: true)
-        onlyMaleSwitch.isOn = true
+        onlyMale = true
         onlyFemaleSwitch.setOn(false, animated: true)
     }
     
     @IBAction func onlyFemaleSwitchOn(_ sender: UISwitch) {
         //onlyFemaleSwitch.setOn(true, animated: true)
-        onlyFemaleSwitch.isOn = true
+        onlyFemale = true
         onlyMaleSwitch.setOn(false, animated: true)
     }
         
     @IBAction func applyFilters(_ sender: UIButton) {
-        instance?.filterTheData(onlyNerds: onlyNerdsSwitch.isOn, onlyMale: onlyMaleSwitch.isOn, onlyFemale: onlyFemaleSwitch.isOn)
+        instance?.filterTheData(onlyNerds,onlyMale,onlyFemale)
+        //instance?.filterViewController = self
         self.dismiss(animated: true, completion: nil)
     }
 

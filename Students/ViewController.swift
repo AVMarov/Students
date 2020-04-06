@@ -7,16 +7,18 @@
 //
 
 import UIKit
+import WebKit
 
-class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!     
     @IBOutlet weak var filtersButton: UIButton!
     
+    
     //Студенты, все персонажи вымышлены любые совпадения случайны
     let students = [
-        Student(name: "Иван", surname: "Иванов", gender: true, profile: "www.google.com"),
+        Student(name: "Иван", surname: "Иванов", gender: true, profile: "https://www.google.com"),
         Student(name: "Петр", surname: "Смирнов", gender: true),
         Student(name: "Алексей", surname: "Сидоров", gender: true),
         Student(name: "Александр", surname: "Петров", gender: true),
@@ -55,17 +57,19 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         Student(name: "Елизавета", surname: "Михайлова", gender: false),
         Student(name: "Мария", surname: "Егорова", gender: false),
         Student(name: "Кристина", surname: "Орлова", gender: false),
-        Student(name: "Анастасия", surname: "Лебедева", gender: false, profile: "www.apple.com")
+        Student(name: "Анастасия", surname: "Лебедева", gender: false, profile: "https://www.apple.com")
         ].sorted(by: { $1.fullname > $0.fullname })
     // Сортировка по полному имени, если только по фамилии, то имена в случайном порядке
     
     var filteredData = [Student]()
     
+    //var webView = WKWebView()
+    // var filterViewController: FilterViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self        
-        searchBar.delegate = self
+        tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "StudentCell")
         tableView.keyboardDismissMode = .onDrag
         
@@ -76,8 +80,20 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         
         filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
         
-        self.filterTheData(onlyNerds: false, onlyMale: false, onlyFemale: false)
+        //webView = WKWebView()
+        // self.filterTheData( false, false, false)
+        // webView.navigationDelegate = self
     }
+    
+    //    override func loadView() {
+    //        //webView = WKWebView()
+    //        //webView.navigationDelegate = self
+    //        self.view = webView
+    //    }
+    
+    //    func webView(_ webView: WKWebView, didP: WKNavigation!) {
+    //        title = webView.title
+    //    }
     
     //Number of row in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -90,6 +106,30 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         cell.textLabel?.text = filteredData[indexPath.row].fullnameAndRating
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let actionList  = UIAlertController(title: nil, message: "Выберите действие", preferredStyle: .actionSheet)
+        let showProfile = UIAlertAction(title: "Профиль в соц сетях", style: .default)
+        { (action) in
+            
+            let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
+            let ok = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
+            alertController.addAction(ok)
+            self.present(alertController, animated: true, completion: nil)
+            
+        }
+        let showData = UIAlertAction(title: "Посмотреть данные", style: .default, handler: nil)
+        let cancel = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        actionList.addAction(showProfile)
+        actionList.addAction(showData)
+        actionList.addAction(cancel)
+        present(actionList, animated: true, completion: nil)
+    }
+    
+    //    func showAlert(){
+    //        let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
+    //        present(alertController, animated: true, completion: nil)
+    //    }
     
     //Search
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -132,15 +172,15 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         self.present(filterViewController!, animated: true, completion: nil)
     }
     
-    func filterTheData(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool) {
+    func filterTheData(_ onlyNerds: Bool, _ onlyMale: Bool, _ onlyFemale: Bool) {
         switch true{
-        
+            
         case onlyNerds && !onlyMale && !onlyFemale: filteredData = students.filter { $0.rating >= 4.5 }
         case onlyMale: filteredData = students.filter { $0.gender == true}
         case onlyFemale: filteredData = students.filter { $0.gender == false }
         case onlyNerds && onlyMale: filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
         case onlyNerds && onlyFemale: filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
-       
+            
         default: filteredData = students
         }
         tableView.reloadData()
@@ -148,3 +188,12 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     
     //try pass data through delegates
 }
+
+//extension WKWebView {
+//    func load(_ urlString: String){
+//        if let url = URL(string: urlString){
+//            let request = URLRequest(url: url)
+//            load(request)
+//        }
+//    }
+//}
