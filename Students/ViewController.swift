@@ -7,44 +7,65 @@
 //
 
 import UIKit
+import WebKit
 
-class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, WKNavigationDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var searchBar: UISearchBar!     
+    @IBOutlet weak var filtersButton: UIButton!
     
-    //Студенты, все персонажи вымышлены любые совпадения случайны
+    
     let students = [
-        Student(name: "Иван", surname: "Иванов", age: 18, rating: 10),
-        Student(name: "Петр", surname: "Смирнов", age: 19, rating: 9),
-        Student(name: "Алексей", surname: "Сидоров", age: 20, rating: 8),
-        Student(name: "Александр", surname: "Петров", age: 21, rating: 7),
-        Student(name: "Владимир", surname: "Кузнецов", age: 22, rating: 6),
-        Student(name: "Петр", surname: "Иванов", age: 23, rating: 5),
-        Student(name: "Владимир", surname: "Смирнов", age: 24, rating: 4),
-        Student(name: "Александр", surname: "Сидоров", age: 25, rating: 9),
-        Student(name: "Алексей", surname: "Петров", age: 26, rating: 6),
-        Student(name: "Иван", surname: "Кузнецов", age: 27, rating: 7),
-        Student(name: "Константин", surname: "Соколов", age: 28, rating: 10),
-        Student(name: "Андрей", surname: "Михайлов", age: 29, rating: 9),
-        Student(name: "Дмитрий", surname: "Егоров", age: 30, rating: 8),
-        Student(name: "Денис", surname: "Орлов", age: 21, rating: 7),
-        Student(name: "Борис", surname: "Лебедев", age: 22, rating: 6),
-        Student(name: "Олег", surname: "Соколов", age: 23, rating: 5),
-        Student(name: "Глеб", surname: "Михайлов", age: 24, rating: 4),
-        Student(name: "Егор", surname: "Егоров", age: 25, rating: 9),
-        Student(name: "Константин", surname: "Орлов", age: 26, rating: 6),
-        Student(name: "Андерей", surname: "Лебедев", age: 27, rating: 7)
-        ].sorted(by: { $1.getFullName() > $0.getFullName() })
-    // Сортировка по полному имени, если только по фамилии, то имена в случайном порядке
+        Student(name: "Иван", surname: "Иванов", gender: true, rating: 3.0, profile: "https://www.google.com"),
+        Student(name: "Петр", surname: "Смирнов", gender: true, rating: 3.1),
+        Student(name: "Алексей", surname: "Сидоров",gender: true, rating: 3.2),
+        Student(name: "Александр", surname: "Петров",gender: true, rating: 3.3),
+        Student(name: "Владимир", surname: "Кузнецов",gender: true, rating: 3.4),
+        Student(name: "Петр", surname: "Иванов",gender: true, rating: 3.5),
+        Student(name: "Владимир", surname: "Смирнов",gender: true, rating: 3.6),
+        Student(name: "Александр", surname: "Сидоров",gender: true, rating: 3.7),
+        Student(name: "Алексей", surname: "Петров",gender: true, rating: 3.8),
+        Student(name: "Иван", surname: "Кузнецов",gender: true, rating: 3.9),
+        Student(name: "Константин", surname: "Соколов",gender: true, rating: 4.0),
+        Student(name: "Андрей", surname: "Михайлов",gender: true, rating: 4.1),
+        Student(name: "Дмитрий", surname: "Егоров",gender: true, rating: 4.2),
+        Student(name: "Денис", surname: "Орлов",gender: true, rating: 4.3),
+        Student(name: "Борис", surname: "Лебедев",gender: true, rating: 4.4),
+        Student(name: "Олег", surname: "Соколов",gender: true, rating: 4.5),
+        Student(name: "Глеб", surname: "Михайлов",gender: true, rating: 4.6),
+        Student(name: "Егор", surname: "Егоров",gender: true, rating: 4.7),
+        Student(name: "Константин", surname: "Орлов",gender: true, rating: 4.8),
+        Student(name: "Андерей", surname: "Лебедев",gender: true, rating: 4.9),
+        Student(name: "Мария", surname: "Иванова",gender: false, rating: 5.0),
+        Student(name: "Ирина", surname: "Смирнова",gender: false, rating: 3.0),
+        Student(name: "Светлана", surname: "Сидорова",gender: false, rating: 3.1),
+        Student(name: "Екатерина", surname: "Петрова",gender: false, rating: 3.2),
+        Student(name: "Елизавета", surname: "Кузнецова",gender: false, rating: 3.3),
+        Student(name: "Анастасия", surname: "Иванова",gender: false, rating: 3.4),
+        Student(name: "Кристина", surname: "Смирнова",gender: false, rating: 3.5),
+        Student(name: "Ольга", surname: "Сидорова",gender: false, rating: 3.6),
+        Student(name: "Юлия", surname: "Петрова",gender: false, rating: 3.7),
+        Student(name: "Елена", surname: "Кузнецова",gender: false, rating: 3.8),
+        Student(name: "Анна", surname: "Соколова",gender: false, rating: 3.9),
+        Student(name: "Алина", surname: "Михайлова",gender: false, rating: 4.0),
+        Student(name: "Ольга", surname: "Егорова",gender: false, rating: 4.1),
+        Student(name: "Светлана", surname: "Орлова",gender: false, rating: 4.2),
+        Student(name: "Юлия", surname: "Лебедева",gender: false, rating: 4.3),
+        Student(name: "Екатерина", surname: "Соколова",gender: false, rating: 4.4),
+        Student(name: "Елизавета", surname: "Михайлова",gender: false, rating: 4.5),
+        Student(name: "Мария", surname: "Егорова",gender: false, rating: 4.6),
+        Student(name: "Кристина", surname: "Орлова",gender: false, rating: 4.7),
+        Student(name: "Анастасия", surname: "Лебедева",gender: false, rating: 4.8, profile: "https://www.apple.com")
+        ].sorted(by: { $1.fullname > $0.fullname })
+    
     
     var filteredData = [Student]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.dataSource = self        
-        searchBar.delegate = self
+        tableView.dataSource = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "StudentCell")
         tableView.keyboardDismissMode = .onDrag
         
@@ -52,8 +73,12 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
         searchBar.sizeToFit()
         
         filteredData = students
+        
+        filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
+        
     }
     
+    //TableView functions
     //Number of row in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return filteredData.count
@@ -62,10 +87,52 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     //Load data in table
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         let cell = tableView.dequeueReusableCell(withIdentifier: "StudentCell", for: indexPath)
-        cell.textLabel?.text = filteredData[indexPath.row].getFullName()
+        cell.textLabel?.text = filteredData[indexPath.row].fullnameAndRating
         return cell
     }
     
+    //func table
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        showActionList(index: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
+    //UIAlert functons
+    //Show actioSheet with list of actions
+    func showActionList(index: IndexPath){
+        let name = tableView.cellForRow(at: index)?.textLabel?.text ?? ""
+        let actionList  = UIAlertController(title: name, message: nil, preferredStyle: .actionSheet)
+        
+        actionList.addAction(UIAlertAction(title: "Профиль в соц сетях", style: .default) { (action) in
+            if let web = self.filteredData[index.row].profile{
+                let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                let webViewController = storyboard.instantiateViewController(withIdentifier: "WebViewController") as? WebViewController
+                webViewController?.website = web
+                self.navigationController?.pushViewController(webViewController!, animated: true)
+                
+            }else{ self.showAlert() }
+        })
+        
+        actionList.addAction(UIAlertAction(title: "Посмотреть данные", style: .default) { (action) in
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
+            self.navigationController?.pushViewController(filterViewController!, animated: true)
+        })
+        
+        actionList.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
+        present(actionList, animated: true, completion: nil)
+    }
+    
+    func showAlert(){
+        let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Ок", style: .cancel, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    //SearchBar functions
     //Search
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredData = searchText.isEmpty ? students : students.filter {
@@ -99,4 +166,52 @@ class ViewController: UIViewController, UITableViewDataSource, UISearchBarDelega
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
     }
+    
+    
+    //Open other viewcontroller functions
+    //    func openWebView(action: UIAlertAction){
+    //        if let web = self.filteredData[index].profile{
+    //            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+    //            let webViewController = storyboard.instantiateViewController(withIdentifier: "WebViewController") as? WebViewController
+    //            webViewController?.website = web
+    //            self.navigationController?.pushViewController(webViewController!, animated: true)
+    //
+    //        }else{ self.showAlert() }
+    //    }
+    //    func openEditDataViewController(action: UIAlertAction){
+    //        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+    //        let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
+    //        self.navigationController?.pushViewController(filterViewController!, animated: true)
+    //    }
+    
+    //Open viewcontroller with filters
+    @objc func openFilterViewController(){
+        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+        let filterViewController = storyboard.instantiateViewController(withIdentifier: "FilterViewController") as? FilterViewController
+        filterViewController?.filtersDelegate = self
+        self.present(filterViewController!, animated: true, completion: nil)
+    }
+    
+    
+    //Filter the data
+    func filterTheData(settings: (Bool, Bool, Bool)) {
+        switch settings {
+        case (true, false, false): filteredData = students.filter { $0.rating >= 4.5 }
+        case (false, true, false): filteredData = students.filter { $0.gender == true }
+        case (false, false, true): filteredData = students.filter { $0.gender == false }
+        case (true, true, false): filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
+        case (true, false, true): filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
+        default: filteredData = students
+        }
+        tableView.reloadData()
+    }
 }
+
+
+//Extension for apply filters
+extension ViewController: ApplyFiltersDelegate{
+    func applyFilters(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool) {
+        filterTheData(settings: (onlyNerds, onlyMale, onlyFemale))
+    }
+}
+

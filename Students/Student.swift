@@ -8,16 +8,28 @@
 struct Student {
     var name: String
     var surname: String
-    var age: Int
-    var rating: Int
+    var gender: Bool
+    var profile: String?
+    var rating: Double
     
-    func getFullName() -> String{
-        return "\(surname) \(name)"
+    var age: Int {
+        return Int.random(in: 18...30)
     }
-
-    //Better to use computed property
-
+    
     var fullname: String {
         return "\(surname) \(name)"
     }
+    
+    var fullnameAndRating: String {
+        return "\(fullname) \( rating)"
+    }
+    
+    init(name: String, surname: String, gender: Bool, rating:Double, profile: String? = nil){
+        self.name = name
+        self.surname = surname
+        self.gender = gender
+        self.rating = rating
+        self.profile = profile
+    }
 }
+
