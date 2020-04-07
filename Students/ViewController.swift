@@ -91,8 +91,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
-    //func table
-    
+    //Clicked on cell
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         showActionList(index: indexPath)
         tableView.deselectRow(at: indexPath, animated: true)
@@ -117,8 +116,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         actionList.addAction(UIAlertAction(title: "Посмотреть данные", style: .default) { (action) in
             let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-            let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
-            self.navigationController?.pushViewController(filterViewController!, animated: true)
+            let editDataTableViewController = storyboard.instantiateViewController(withIdentifier: "EditDataTableViewController") as? EditDataTableViewController
+            editDataTableViewController?.editStudentDelegate = self.filteredData[index.row]
+            editDataTableViewController?.student = self.filteredData[index.row]
+            self.navigationController?.pushViewController(editDataTableViewController!, animated: true)
         })
         
         actionList.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
