@@ -91,18 +91,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         return cell
     }
     
+    //func table
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        showActionList(index: indexPath.row)
+        showActionList(index: indexPath)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
     //UIAlert functons
     //Show actioSheet with list of actions
-    func showActionList(index: Int){
-        let actionList  = UIAlertController(title: "Выберите действие", message: nil, preferredStyle: .actionSheet)
+    func showActionList(index: IndexPath){
+        let name = tableView.cellForRow(at: index)?.textLabel?.text ?? ""
+        let actionList  = UIAlertController(title: name, message: nil, preferredStyle: .actionSheet)
         
         actionList.addAction(UIAlertAction(title: "Профиль в соц сетях", style: .default) { (action) in
-            if let web = self.filteredData[index].profile{
+            if let web = self.filteredData[index.row].profile{
                 let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
                 let webViewController = storyboard.instantiateViewController(withIdentifier: "WebViewController") as? WebViewController
                 webViewController?.website = web
