@@ -24,6 +24,14 @@ struct Student {
         return "\(fullname) \( rating)"
     }
     
+    init(){
+        self.name = ""
+        self.surname = ""
+        self.gender = false
+        self.rating = 0.0
+        self.profile = nil
+    }
+    
     init(name: String, surname: String, gender: Bool, rating:Double, profile: String? = nil){
         self.name = name
         self.surname = surname
@@ -33,3 +41,8 @@ struct Student {
     }
 }
 
+extension Student: EditStudentDelegate{
+    func saveNewProperties() {
+        
+    }
+}
