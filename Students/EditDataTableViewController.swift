@@ -12,7 +12,7 @@ protocol EditStudentDelegate {
     func saveNewProperties()
 }
 
-class EditDataTableViewController: UITableViewController {
+class EditDataTableViewController: UITableViewController, UITextFieldDelegate {
 
     
     @IBOutlet weak var nameField: UITextField!
@@ -34,48 +34,45 @@ class EditDataTableViewController: UITableViewController {
         
         hideKeyboardWhenTappedAround()
         
-        //nameCell.isE
-
+        nameField.delegate = self
+        genderField.delegate = self
+        ratingField.delegate = self
+        profileField.delegate = self
+       
         nameField.text = student.fullname
         genderField.text = student.gender ? "Муж" : "Жен"
         ratingField.text = "\(student.rating)"
         profileField.text = student.profile ?? "Нет профиля в соц сетях"
         
-        nameField.isEnabled = false
-        genderField.isEnabled = false
-        ratingField.isEnabled = false
-        profileField.isEnabled = false
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Редактировать", style: .plain, target: self, action: #selector(rightButtonTapped))
+        tableView.tableFooterView = UIView()
+        
+        navigationItem.title = "Данные студента"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Изменить", style: .plain, target: self, action: #selector(rightButtonTapped))
     }
 
     
-    // MARK: - Table view data source
-
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 4
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: false)
-//    }
     
     @objc func rightButtonTapped(button: UIBarButtonItem){
-        if button.title! == "Редактировать"{        
+        if button.title! == "Изменить"{
+            
             button.title = "Сохранить"
             nameField.isEnabled = true
             genderField.isEnabled = true
             ratingField.isEnabled = true
             profileField.isEnabled = true
         } else if button.title! == "Сохранить"{
-            button.title = "Редактировать"
-            
+            button.title = "Изменить"
+            nameField.isEnabled = false
+            genderField.isEnabled = false
+            ratingField.isEnabled = false
+            profileField.isEnabled = false
+            self.view.endEditing(true)
         }
     }
 }
