@@ -15,7 +15,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var searchBar: UISearchBar!     
     @IBOutlet weak var filtersButton: UIButton!
     
-  
+    
     let students = [
         Student(name: "Иван", surname: "Иванов", gender: true, rating: 3.0, profile: "https://www.google.com"),
         Student(name: "Петр", surname: "Смирнов", gender: true, rating: 3.1),
@@ -61,7 +61,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     var filteredData = [Student]()
-      
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -169,21 +169,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     //Open other viewcontroller functions
-//    func openWebView(action: UIAlertAction){
-//        if let web = self.filteredData[index].profile{
-//            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//            let webViewController = storyboard.instantiateViewController(withIdentifier: "WebViewController") as? WebViewController
-//            webViewController?.website = web
-//            self.navigationController?.pushViewController(webViewController!, animated: true)
-//
-//        }else{ self.showAlert() }
-//    }
-//    func openEditDataViewController(action: UIAlertAction){
-//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//        let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
-//        self.navigationController?.pushViewController(filterViewController!, animated: true)
-//    }
-
+    //    func openWebView(action: UIAlertAction){
+    //        if let web = self.filteredData[index].profile{
+    //            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+    //            let webViewController = storyboard.instantiateViewController(withIdentifier: "WebViewController") as? WebViewController
+    //            webViewController?.website = web
+    //            self.navigationController?.pushViewController(webViewController!, animated: true)
+    //
+    //        }else{ self.showAlert() }
+    //    }
+    //    func openEditDataViewController(action: UIAlertAction){
+    //        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+    //        let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
+    //        self.navigationController?.pushViewController(filterViewController!, animated: true)
+    //    }
+    
     //Open viewcontroller with filters
     @objc func openFilterViewController(){
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
@@ -194,19 +194,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     //Filter the data
-    func filterTheData(_ onlyNerds: Bool, _ onlyMale: Bool, _ onlyFemale: Bool) {
-        if onlyNerds && !onlyMale && !onlyFemale{
-            filteredData = students.filter { $0.rating >= 4.5 }
-        }else if onlyMale && !onlyNerds{
-            filteredData = students.filter { $0.gender == true }
-        }else if onlyFemale && !onlyNerds{
-            filteredData = students.filter { $0.gender == false }
-        }else if  onlyNerds && onlyMale {
-            filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
-        }else if  onlyNerds && onlyFemale {
-            filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
-        }else{
-            filteredData = students
+    func filterTheData(settings: (Bool, Bool, Bool)) {
+        switch settings {
+        case (true, false, false): filteredData = students.filter { $0.rating >= 4.5 }
+        case (false, true, false): filteredData = students.filter { $0.gender == true }
+        case (false, false, true): filteredData = students.filter { $0.gender == false }
+        case (true, true, false): filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
+        case (true, false, true): filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
+        default: filteredData = students
         }
         tableView.reloadData()
     }
@@ -215,8 +210,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
 //Extension for apply filters
 extension ViewController: ApplyFiltersDelegate{
-    func applyfilters(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool) {
-        filterTheData(onlyNerds, onlyMale, onlyFemale)
+    func applyFilters(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool) {
+        filterTheData(settings: (onlyNerds, onlyMale, onlyFemale))
     }
 }
 

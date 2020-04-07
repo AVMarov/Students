@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ApplyFiltersDelegate {
-    func applyfilters(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool)
+    func applyFilters(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool)
 }
 
 class FilterViewController: UIViewController {
@@ -39,7 +39,7 @@ class FilterViewController: UIViewController {
     }
         
     @IBAction func tapButton(_ sender: UIButton) {
-        filtersDelegate.applyfilters(onlyNerds: onlyNerdsSwitch.isOn, onlyMale: onlyMaleSwitch.isOn, onlyFemale: onlyFemaleSwitch.isOn)
+        filtersDelegate.applyFilters(onlyNerds: onlyNerdsSwitch.isOn, onlyMale: onlyMaleSwitch.isOn, onlyFemale: onlyFemaleSwitch.isOn)
         saveSettings()
         self.dismiss(animated: true, completion: nil)
     }
