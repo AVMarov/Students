@@ -167,23 +167,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         searchBar.showsCancelButton = false
     }
     
-    
-    //Open other viewcontroller functions
-    //    func openWebView(action: UIAlertAction){
-    //        if let web = self.filteredData[index].profile{
-    //            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-    //            let webViewController = storyboard.instantiateViewController(withIdentifier: "WebViewController") as? WebViewController
-    //            webViewController?.website = web
-    //            self.navigationController?.pushViewController(webViewController!, animated: true)
-    //
-    //        }else{ self.showAlert() }
-    //    }
-    //    func openEditDataViewController(action: UIAlertAction){
-    //        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-    //        let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
-    //        self.navigationController?.pushViewController(filterViewController!, animated: true)
-    //    }
-    
+       
     //Open viewcontroller with filters
     @objc func openFilterViewController(){
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
