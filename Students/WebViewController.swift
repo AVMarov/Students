@@ -9,25 +9,31 @@
 import UIKit
 import WebKit
 
-class WebViewController: UIViewController {
-
-    @IBOutlet weak var webView: WKWebView!
+class WebViewController: UIViewController, WKNavigationDelegate {
     
+   
+    var webView: WKWebView!
+    var website = ""
+    
+    override func loadView() {
+        webView = WKWebView()
+        webView.navigationDelegate = self
+        view = webView
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        let url = URL(string: website)!
+        webView.load(URLRequest(url:url))
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+//    @objc func backTapped(){
+//        self.dismiss(animated: true, completion: nil)
+//    }
+    
+//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+//        title = webView.title
+//    }
 
 }

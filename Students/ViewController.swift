@@ -62,15 +62,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // Сортировка по полному имени, если только по фамилии, то имена в случайном порядке
     
     var filteredData = [Student]()
-    var webView: WKWebView!
-    //var webView = WKWebView()
-    // var filterViewController: FilterViewController?
-    override func loadView() {
-        webView = WKWebView()
-        webView.navigationDelegate = self
-        view = webView
-    }
-    
+      
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,10 +77,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
         
-//        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "", style: <#T##UIBarButtonItem.Style#>, target: <#T##Any?#>, action: <#T##Selector?#>)
     }
-    
-
     
     //Number of row in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
@@ -110,11 +99,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             let actionList  = UIAlertController(title: "Выберите действие", message: nil, preferredStyle: .actionSheet)
         actionList.addAction(UIAlertAction(title: "Профиль в соц сетях", style: .default)
         { (action) in
-            if let profile = self.filteredData[index].profile{
-                let alertProfileController = UIAlertController(title: nil, message: profile , preferredStyle: .alert)
-                let ok = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
-                alertProfileController.addAction(ok)
-                self.present(alertProfileController, animated: true, completion: nil)
+            if let web = self.filteredData[index].profile{
+                let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                let webViewController = storyboard.instantiateViewController(withIdentifier: "WebViewController") as? WebViewController
+                webViewController?.website = web
+                self.present(webViewController!, animated: true, completion: nil)
+                
             }else{
                 self.showAlert()
 //                let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
@@ -124,10 +114,12 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             }
         })
         
-        actionList.addAction(UIAlertAction(title: "Посмотреть данные", style: .default)
-        { (action) in
-            
-        })
+        actionList.addAction(UIAlertAction(title: "Посмотреть данные", style: .default){ (action) in
+            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+            let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
+            self.present(filterViewController!, animated: true, completion: nil)
+            })
+        
         actionList.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         present(actionList, animated: true, completion: nil)
     }
@@ -138,7 +130,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func editData(){
+    func openEditDataViewController(){
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
         self.present(filterViewController!, animated: true, completion: nil)
