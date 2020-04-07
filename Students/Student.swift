@@ -16,10 +16,6 @@ struct Student {
         return Int.random(in: 18...30)
     }
     
-//    var rating: Double {
-//        return Double.random(in: 3...5)
-//    }
-    
     var fullname: String {
         return "\(surname) \(name)"
     }

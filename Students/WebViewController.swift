@@ -26,14 +26,5 @@ class WebViewController: UIViewController, WKNavigationDelegate {
         
         let url = URL(string: website)!
         webView.load(URLRequest(url:url))
-    }
-    
-//    @objc func backTapped(){
-//        self.dismiss(animated: true, completion: nil)
-//    }
-    
-//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//        title = webView.title
-//    }
-
+    }    
 }

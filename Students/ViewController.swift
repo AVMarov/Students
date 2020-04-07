@@ -15,8 +15,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var searchBar: UISearchBar!     
     @IBOutlet weak var filtersButton: UIButton!
     
-    
-    //Студенты, все персонажи вымышлены любые совпадения случайны
+  
     let students = [
         Student(name: "Иван", surname: "Иванов", gender: true, rating: 3.0, profile: "https://www.google.com"),
         Student(name: "Петр", surname: "Смирнов", gender: true, rating: 3.1),
@@ -59,7 +58,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         Student(name: "Кристина", surname: "Орлова",gender: false, rating: 4.7),
         Student(name: "Анастасия", surname: "Лебедева",gender: false, rating: 4.8, profile: "https://www.apple.com")
         ].sorted(by: { $1.fullname > $0.fullname })
-    // Сортировка по полному имени, если только по фамилии, то имена в случайном порядке
+    
     
     var filteredData = [Student]()
       
@@ -79,6 +78,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    //TableView functions
     //Number of row in table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         return filteredData.count
@@ -95,47 +95,40 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         showActionList(index: indexPath.row)
     }
     
+    
+    //UIAlert functons
+    //Show actioSheet with list of actions
     func showActionList(index: Int){
-            let actionList  = UIAlertController(title: "Выберите действие", message: nil, preferredStyle: .actionSheet)
-        actionList.addAction(UIAlertAction(title: "Профиль в соц сетях", style: .default)
-        { (action) in
+        let actionList  = UIAlertController(title: "Выберите действие", message: nil, preferredStyle: .actionSheet)
+        
+        actionList.addAction(UIAlertAction(title: "Профиль в соц сетях", style: .default) { (action) in
             if let web = self.filteredData[index].profile{
                 let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
                 let webViewController = storyboard.instantiateViewController(withIdentifier: "WebViewController") as? WebViewController
                 webViewController?.website = web
-                self.present(webViewController!, animated: true, completion: nil)
+                self.navigationController?.pushViewController(webViewController!, animated: true)
                 
-            }else{
-                self.showAlert()
-//                let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
-//                let ok = UIAlertAction(title: "Ок", style: .cancel, handler: nil)
-//                alertController.addAction(ok)
-//                self.present(alertController, animated: true, completion: nil)
-            }
+            }else{ self.showAlert() }
         })
         
-        actionList.addAction(UIAlertAction(title: "Посмотреть данные", style: .default){ (action) in
+        actionList.addAction(UIAlertAction(title: "Посмотреть данные", style: .default) { (action) in
             let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
-            self.present(filterViewController!, animated: true, completion: nil)
-            })
+            self.navigationController?.pushViewController(filterViewController!, animated: true)
+        })
         
         actionList.addAction(UIAlertAction(title: "Отмена", style: .cancel, handler: nil))
         present(actionList, animated: true, completion: nil)
     }
-   
+    
     func showAlert(){
         let alertController = UIAlertController(title: nil, message: "Нет данных о профиле в социальных сетях " , preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Ок", style: .cancel, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func openEditDataViewController(){
-        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-        let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
-        self.present(filterViewController!, animated: true, completion: nil)
-    }
     
+    //SearchBar functions
     //Search
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         filteredData = searchText.isEmpty ? students : students.filter {
@@ -170,6 +163,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         searchBar.showsCancelButton = false
     }
     
+    
+    //Open other viewcontroller functions
+//    func openWebView(action: UIAlertAction){
+//        if let web = self.filteredData[index].profile{
+//            let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+//            let webViewController = storyboard.instantiateViewController(withIdentifier: "WebViewController") as? WebViewController
+//            webViewController?.website = web
+//            self.navigationController?.pushViewController(webViewController!, animated: true)
+//
+//        }else{ self.showAlert() }
+//    }
+//    func openEditDataViewController(action: UIAlertAction){
+//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+//        let filterViewController = storyboard.instantiateViewController(withIdentifier: "EditDataViewController") as? EditDataViewController
+//        self.navigationController?.pushViewController(filterViewController!, animated: true)
+//    }
+
+    //Open viewcontroller with filters
     @objc func openFilterViewController(){
         let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
         let filterViewController = storyboard.instantiateViewController(withIdentifier: "FilterViewController") as? FilterViewController
@@ -177,6 +188,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         self.present(filterViewController!, animated: true, completion: nil)
     }
     
+    
+    //Filter the data
     func filterTheData(_ onlyNerds: Bool, _ onlyMale: Bool, _ onlyFemale: Bool) {
         if onlyNerds && !onlyMale && !onlyFemale{
             filteredData = students.filter { $0.rating >= 4.5 }
@@ -193,9 +206,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         tableView.reloadData()
     }
-
 }
 
+
+//Extension for apply filters
 extension ViewController: ApplyFiltersDelegate{
     func applyfilters(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool) {
         filterTheData(onlyNerds, onlyMale, onlyFemale)
