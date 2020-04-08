@@ -28,7 +28,7 @@ class FilterViewController: UIViewController {
     }
     
     var filtersDelegate: ApplyFiltersDelegate!
-    var defaults = UserDefaults.standard
+    var defaultsEdit = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,14 +54,14 @@ class FilterViewController: UIViewController {
     }
     
     func saveSettings(){
-        defaults.set(onlyNerdsSwitch.isOn, forKey: Switch.onlyNerds.rawValue)
-        defaults.set(onlyMaleSwitch.isOn, forKey: Switch.onlyMale.rawValue)
-        defaults.set(onlyFemaleSwitch.isOn, forKey: Switch.onlyFemale.rawValue)
+        defaultsEdit.set(onlyNerdsSwitch.isOn, forKey: Switch.onlyNerds.rawValue)
+        defaultsEdit.set(onlyMaleSwitch.isOn, forKey: Switch.onlyMale.rawValue)
+        defaultsEdit.set(onlyFemaleSwitch.isOn, forKey: Switch.onlyFemale.rawValue)
     }
     
     func checkSettings(){
-        onlyNerdsSwitch.isOn = defaults.bool(forKey: Switch.onlyNerds.rawValue)
-        onlyMaleSwitch.isOn = defaults.bool(forKey: Switch.onlyMale.rawValue)
-        onlyFemaleSwitch.isOn = defaults.bool(forKey: Switch.onlyFemale.rawValue)
+        onlyNerdsSwitch.isOn = defaultsEdit.bool(forKey: Switch.onlyNerds.rawValue)
+        onlyMaleSwitch.isOn = defaultsEdit.bool(forKey: Switch.onlyMale.rawValue)
+        onlyFemaleSwitch.isOn = defaultsEdit.bool(forKey: Switch.onlyFemale.rawValue)
     }
 }
