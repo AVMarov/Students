@@ -9,7 +9,7 @@
 import UIKit
 
 protocol EditStudentDelegate {
-    func saveNewProperties()
+    func saveNewProperties(index: Int, name: String, rating: String, gender: String, prolile: String?)
 }
 
 class EditDataTableViewController: UITableViewController, UITextFieldDelegate {
@@ -19,15 +19,11 @@ class EditDataTableViewController: UITableViewController, UITextFieldDelegate {
     @IBOutlet weak var ratingField: UITextField!
     @IBOutlet weak var genderField: UITextField!
     @IBOutlet weak var profileField: UITextField!
-    
-    
-//    @IBOutlet weak var nameCell: UITableViewCell!
-//    @IBOutlet weak var ratingCell: UITableViewCell!
-//    @IBOutlet weak var genderCell: UITableViewCell!
-//    @IBOutlet weak var profileCell: UITableViewCell!
+
     
     var editStudentDelegate: EditStudentDelegate!
     var student = Student()
+    var index = Int()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +38,13 @@ class EditDataTableViewController: UITableViewController, UITextFieldDelegate {
         nameField.text = student.fullname
         genderField.text = student.gender ? "Муж" : "Жен"
         ratingField.text = "\(student.rating)"
-        profileField.text = student.profile ?? "Нет профиля в соц сетях"
+        if let website = student.profile {
+            profileField.text = website
+        } else {
+            profileField.text = ""
+            profileField.placeholder = "Нет данных о профиле"
+        }
+        
         
         
         tableView.tableFooterView = UIView()
@@ -72,9 +74,19 @@ class EditDataTableViewController: UITableViewController, UITextFieldDelegate {
             genderField.isEnabled = false
             ratingField.isEnabled = false
             profileField.isEnabled = false
+            
+            editStudentDelegate.saveNewProperties(index: index,
+                                                  name: nameField.text ?? "",
+                                                  rating: ratingField.text ?? "",
+                                                  gender: genderField.text ?? "Муж",
+                                                  prolile: profileField.text)
+            
             self.view.endEditing(true)
         }
     }
+    
+    
+    
 }
 
 extension UIViewController{

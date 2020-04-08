@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var filtersButton: UIButton!
     
     
-    let students = [
+    var students = [
         Student(name: "Иван", surname: "Иванов", gender: true, rating: 3.0, profile: "https://www.google.com"),
         Student(name: "Петр", surname: "Смирнов", gender: true, rating: 3.1),
         Student(name: "Алексей", surname: "Сидоров",gender: true, rating: 3.2),
@@ -61,6 +61,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     var filteredData = [Student]()
+    var defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,10 +73,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         searchBar.delegate = self
         searchBar.sizeToFit()
         
-        filteredData = students
+       // filteredData = students
         
         filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
         //filterTheData(settings: UserSettings.filterSettings)
+        
+        if let savedStudent = defaults.object(forKey: "ListOfStudents") as? Data {
+            let jsonDecoder = JSONDecoder()
+            do{
+                students = try jsonDecoder.decode([Student].self, from: savedStudent)
+            } catch {
+                print("Failed to load students from encode list")
+            }
+        }
     }
     
     
@@ -124,8 +134,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         actionList.addAction(UIAlertAction(title: "Посмотреть данные", style: .default) { (action) in
             let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             let editDataTableViewController = storyboard.instantiateViewController(withIdentifier: "EditDataTableViewController") as? EditDataTableViewController
-            editDataTableViewController?.editStudentDelegate = self.filteredData[index.row]
+            editDataTableViewController?.editStudentDelegate = self
             editDataTableViewController?.student = self.filteredData[index.row]
+            editDataTableViewController?.index = index.row
             self.navigationController?.pushViewController(editDataTableViewController!, animated: true)
         })
         
@@ -166,8 +177,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.endEditing(true)
-//        filteredData = students
-//        tableView.reloadData()
     }
     
     //Dismiss cancel button when searchBar is no active
@@ -197,6 +206,46 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         tableView.reloadData()
     }
+    
+    func saveStudent(){
+        let jsonEncoder = JSONEncoder()
+
+        if let savedData = try? jsonEncoder.encode(students){
+            defaults.set(savedData, forKey: "ListOfStudents")
+        } else {
+            print("Failed to save students")
+        }
+    }
+    
+//    func saveStudents(studentsList: [Student]) -> [Encodable]{
+//        let jsonEncoder = JSONEncoder()
+//        var newArray: Array<Encodable> = Array()
+//        for student in studentsList {
+//            if let savedData = try? jsonEncoder.encode(student){
+//                newArray.append(savedData)
+//            } else {
+//                print("Failed save student in array")
+//            }
+//        }
+//        return newArray
+//    }
+    
+//    func checkStudents() -> [Student]{
+//
+//        var newArray: Array<Student> = Array()
+//        if let savedStudent = defaults.object(forKey: "ListOfStudents") as? Data {
+//            let jsonDecoder = JSONDecoder()
+//            do{
+//                let student = try jsonDecoder.decode([Student].self , from: savedStudent)
+//                newArray.append(<#T##newElement: Student##Student#>)
+//            }
+//        } catch {
+//            print("Failed to load students from encodeList")
+//        }
+//    }
+//
+//    return newArray
+//}
 }
 
 
@@ -207,3 +256,14 @@ extension ViewController: ApplyFiltersDelegate{
     }
 }
 
+
+extension ViewController: EditStudentDelegate{
+    func saveNewProperties(index:Int, name: String, rating: String, gender: String, prolile: String?) {
+        //filteredData[index].changeProperties(name, rating, gender, prolile)
+        
+        //defaults.set(saveStudents(studentsList: filteredData), forKey: "ListOfStudents")
+        students[index].changeProperties(name, rating, gender, prolile)
+        self.saveStudent()
+    }
+   
+}
