@@ -75,15 +75,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         filteredData = students
         
         filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
-        filterTheData(settings: UserSettings.filterSettings)
+        //filterTheData(settings: UserSettings.filterSettings)
     }
     
     
 //I think if filter the data here it is twice job
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        filterTheData(settings: UserSettings.filterSettings)
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        filterTheData(settings: UserSettings.filterSettings)
+    }
     
     //TableView functions
     //Number of row in table
@@ -143,7 +143,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //SearchBar functions
     //Search
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredData = searchText.isEmpty ? students : students.filter {
+        filteredData = searchText.isEmpty ? filteredData : filteredData.filter {
             $0.fullname.range(of: searchText,
                               options: .caseInsensitive,
                               range: nil,
@@ -166,8 +166,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.endEditing(true)
-        filteredData = students
-        tableView.reloadData()
+//        filteredData = students
+//        tableView.reloadData()
     }
     
     //Dismiss cancel button when searchBar is no active
