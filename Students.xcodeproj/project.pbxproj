@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		630504FD243DAAF10019B2DB /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 630504FC243DAAF10019B2DB /* UserSettings.swift */; };
 		631041C3243A440600FE778A /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631041C2243A440600FE778A /* FilterViewController.swift */; };
 		635C0A0724364127005720E8 /* Student.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635C0A0624364127005720E8 /* Student.swift */; };
 		63699FA8243B7EFD00D8A83F /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63699FA7243B7EFD00D8A83F /* WebViewController.swift */; };
@@ -21,7 +20,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		630504FC243DAAF10019B2DB /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		631041C2243A440600FE778A /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		635C0A0624364127005720E8 /* Student.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Student.swift; sourceTree = "<group>"; };
 		63699FA7243B7EFD00D8A83F /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -69,7 +67,6 @@
 				63DE0B2C2435E57A003178D9 /* AppDelegate.swift */,
 				63DE0B2E2435E57A003178D9 /* SceneDelegate.swift */,
 				635C0A0624364127005720E8 /* Student.swift */,
-				630504FC243DAAF10019B2DB /* UserSettings.swift */,
 				63DE0B302435E57A003178D9 /* ViewController.swift */,
 				631041C2243A440600FE778A /* FilterViewController.swift */,
 				63F1B511243D1D73001A7CCB /* EditDataTableViewController.swift */,
@@ -158,7 +155,6 @@
 				63DE0B2F2435E57A003178D9 /* SceneDelegate.swift in Sources */,
 				63F1B512243D1D73001A7CCB /* EditDataTableViewController.swift in Sources */,
 				63699FA8243B7EFD00D8A83F /* WebViewController.swift in Sources */,
-				630504FD243DAAF10019B2DB /* UserSettings.swift in Sources */,
 				635C0A0724364127005720E8 /* Student.swift in Sources */,
 				631041C3243A440600FE778A /* FilterViewController.swift in Sources */,
 			);
