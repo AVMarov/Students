@@ -21,7 +21,6 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var applyButton: UIButton!
     
     var filtersDelegate: ApplyFiltersDelegate!
-    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,18 +46,15 @@ class FilterViewController: UIViewController {
     }
     
     func saveSettings(){
-        defaults.set([onlyNerdsSwitch.isOn,
-                      onlyMaleSwitch.isOn,
-                      onlyFemaleSwitch.isOn],
-                     forKey: "settings")
+        UserSettings.filterSettings = [onlyNerdsSwitch.isOn,
+                                       onlyMaleSwitch.isOn,
+                                       onlyFemaleSwitch.isOn]
 
     }
     
     func checkSettings(){
-       let arrSettings = defaults.object(forKey: "settings") as? [Bool] ?? [false, false, false]
-        onlyNerdsSwitch.isOn = arrSettings[0]
-        onlyMaleSwitch.isOn = arrSettings[1]
-        onlyFemaleSwitch.isOn = arrSettings[2]
+        onlyNerdsSwitch.isOn = UserSettings.filterSettings[0]
+        onlyMaleSwitch.isOn = UserSettings.filterSettings[1]
+        onlyFemaleSwitch.isOn = UserSettings.filterSettings[2]
     }
-
 }

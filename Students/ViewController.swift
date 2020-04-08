@@ -75,8 +75,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         filteredData = students
         
         filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
-        
+        filterTheData(settings: UserSettings.filterSettings)
     }
+    
+    
+//I think if filter the data here it is twice job
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        filterTheData(settings: UserSettings.filterSettings)
+//    }
     
     //TableView functions
     //Number of row in table
@@ -179,13 +186,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     //Filter the data
-    func filterTheData(settings: (Bool, Bool, Bool)) {
+    func filterTheData(settings: [Bool]) {
         switch settings {
-        case (true, false, false): filteredData = students.filter { $0.rating >= 4.5 }
-        case (false, true, false): filteredData = students.filter { $0.gender == true }
-        case (false, false, true): filteredData = students.filter { $0.gender == false }
-        case (true, true, false): filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
-        case (true, false, true): filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
+        case [true, false, false]: filteredData = students.filter { $0.rating >= 4.5 }
+        case [false, true, false]: filteredData = students.filter { $0.gender == true }
+        case [false, false, true]: filteredData = students.filter { $0.gender == false }
+        case [true, true, false]: filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
+        case [ true, false, true]: filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
         default: filteredData = students
         }
         tableView.reloadData()
@@ -196,7 +203,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //Extension for apply filters
 extension ViewController: ApplyFiltersDelegate{
     func applyFilters(settings: (onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool)) {
-        filterTheData(settings: settings)
+        filterTheData(settings: [settings.onlyNerds, settings.onlyMale, settings.onlyFemale])
     }
 }
 
