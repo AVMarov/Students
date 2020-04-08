@@ -16,7 +16,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var filtersButton: UIButton!
     
     
-    let students = [
+    var students = [
         Student(name: "Иван", surname: "Иванов", gender: true, rating: 3.0, profile: "https://www.google.com"),
         Student(name: "Петр", surname: "Смирнов", gender: true, rating: 3.1),
         Student(name: "Алексей", surname: "Сидоров",gender: true, rating: 3.2),
@@ -61,6 +61,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     var filteredData = [Student]()
+    var defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,11 +72,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         searchBar.delegate = self
         searchBar.sizeToFit()
-        
-        filteredData = students
-        
+                
         filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
-        
+                
+        if let savedStudent = defaults.object(forKey: "ListOfStudents") as? Data {
+            let jsonDecoder = JSONDecoder()
+            do{
+                students = try jsonDecoder.decode([Student].self, from: savedStudent)
+            } catch {
+                print("Failed to load students from encode list")
+            }
+        }
+    }
+    
+    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let settings = defaults.object(forKey: "filterSettings") as? [Bool] ?? [false, false, false]
+        filterTheData(settings: settings)        
     }
     
     //TableView functions
@@ -117,8 +132,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         actionList.addAction(UIAlertAction(title: "Посмотреть данные", style: .default) { (action) in
             let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
             let editDataTableViewController = storyboard.instantiateViewController(withIdentifier: "EditDataTableViewController") as? EditDataTableViewController
-            editDataTableViewController?.editStudentDelegate = self.filteredData[index.row]
+            editDataTableViewController?.editStudentDelegate = self
             editDataTableViewController?.student = self.filteredData[index.row]
+            editDataTableViewController?.index = index.row
             self.navigationController?.pushViewController(editDataTableViewController!, animated: true)
         })
         
@@ -152,6 +168,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     //Hide keyboard when clicked search button
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        tableView.reloadData()
         searchBar.endEditing(true)
     }
     
@@ -179,16 +196,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     
     //Filter the data
-    func filterTheData(settings: (Bool, Bool, Bool)) {
+    func filterTheData(settings: [Bool]) {
         switch settings {
-        case (true, false, false): filteredData = students.filter { $0.rating >= 4.5 }
-        case (false, true, false): filteredData = students.filter { $0.gender == true }
-        case (false, false, true): filteredData = students.filter { $0.gender == false }
-        case (true, true, false): filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
-        case (true, false, true): filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
+        case [true, false, false]: filteredData = students.filter { $0.rating >= 4.5 }
+        case [false, true, false]: filteredData = students.filter { $0.gender == true }
+        case [false, false, true]: filteredData = students.filter { $0.gender == false }
+        case [true, true, false]: filteredData = students.filter { $0.rating >= 4.5 && $0.gender == true }
+        case [ true, false, true]: filteredData = students.filter {$0.rating >= 4.5 && $0.gender == false}
         default: filteredData = students
         }
         tableView.reloadData()
+    }
+    
+    func saveStudent(){
+        let jsonEncoder = JSONEncoder()
+        if let savedData = try? jsonEncoder.encode(students){
+            defaults.set(savedData, forKey: "ListOfStudents")
+        } else {
+            print("Failed to save students")
+        }
     }
 }
 
@@ -196,7 +222,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //Extension for apply filters
 extension ViewController: ApplyFiltersDelegate{
     func applyFilters(settings: (onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool)) {
-        filterTheData(settings: settings)
+        filterTheData(settings: [settings.onlyNerds, settings.onlyMale, settings.onlyFemale])
+        defaults.set([settings.onlyNerds, settings.onlyMale, settings.onlyFemale], forKey: "filterSettings")
     }
 }
 
+
+extension ViewController: EditStudentDelegate{
+    func saveNewProperties(index:Int, name: String, rating: String, gender: String, prolile: String?) {
+        students[index].changeProperties(name, rating, gender, prolile)
+        self.saveStudent()
+    }
+   
+}
