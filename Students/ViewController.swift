@@ -74,8 +74,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         searchBar.sizeToFit()
                 
         filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
-        //filterTheData(settings: UserSettings.filterSettings)
-        
+                
         if let savedStudent = defaults.object(forKey: "ListOfStudents") as? Data {
             let jsonDecoder = JSONDecoder()
             do{
@@ -87,7 +86,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     
     
-//I think if filter the data here it is twice job
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let settings = defaults.object(forKey: "filterSettings") as? [Bool] ?? [false, false, false]
@@ -153,7 +152,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //SearchBar functions
     //Search
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredData = searchText.isEmpty ? filteredData : filteredData.filter {
+        filteredData = searchText.isEmpty ? students : students.filter {
             $0.fullname.range(of: searchText,
                               options: .caseInsensitive,
                               range: nil,
@@ -169,6 +168,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     //Hide keyboard when clicked search button
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        tableView.reloadData()
         searchBar.endEditing(true)
     }
     
@@ -176,6 +176,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.endEditing(true)
+        filteredData = students
+        tableView.reloadData()
     }
     
     //Dismiss cancel button when searchBar is no active
@@ -208,7 +210,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func saveStudent(){
         let jsonEncoder = JSONEncoder()
-
         if let savedData = try? jsonEncoder.encode(students){
             defaults.set(savedData, forKey: "ListOfStudents")
         } else {
