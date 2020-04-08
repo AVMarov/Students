@@ -43,9 +43,7 @@ class EditDataTableViewController: UITableViewController, UITextFieldDelegate {
         } else {
             profileField.text = ""
             profileField.placeholder = "Нет данных о профиле"
-        }
-        
-        
+        }        
         
         tableView.tableFooterView = UIView()
         

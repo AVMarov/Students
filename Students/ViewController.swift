@@ -72,9 +72,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
         searchBar.delegate = self
         searchBar.sizeToFit()
-        
-       // filteredData = students
-        
+                
         filtersButton.addTarget(self, action: #selector(openFilterViewController), for: .touchUpInside)
         //filterTheData(settings: UserSettings.filterSettings)
         
@@ -92,7 +90,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 //I think if filter the data here it is twice job
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        filterTheData(settings: UserSettings.filterSettings)
+        let settings = defaults.object(forKey: "filterSettings") as? [Bool] ?? [false, false, false]
+        filterTheData(settings: settings)        
     }
     
     //TableView functions
@@ -216,36 +215,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
             print("Failed to save students")
         }
     }
-    
-//    func saveStudents(studentsList: [Student]) -> [Encodable]{
-//        let jsonEncoder = JSONEncoder()
-//        var newArray: Array<Encodable> = Array()
-//        for student in studentsList {
-//            if let savedData = try? jsonEncoder.encode(student){
-//                newArray.append(savedData)
-//            } else {
-//                print("Failed save student in array")
-//            }
-//        }
-//        return newArray
-//    }
-    
-//    func checkStudents() -> [Student]{
-//
-//        var newArray: Array<Student> = Array()
-//        if let savedStudent = defaults.object(forKey: "ListOfStudents") as? Data {
-//            let jsonDecoder = JSONDecoder()
-//            do{
-//                let student = try jsonDecoder.decode([Student].self , from: savedStudent)
-//                newArray.append(<#T##newElement: Student##Student#>)
-//            }
-//        } catch {
-//            print("Failed to load students from encodeList")
-//        }
-//    }
-//
-//    return newArray
-//}
 }
 
 
@@ -253,15 +222,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 extension ViewController: ApplyFiltersDelegate{
     func applyFilters(settings: (onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool)) {
         filterTheData(settings: [settings.onlyNerds, settings.onlyMale, settings.onlyFemale])
+        defaults.set([settings.onlyNerds, settings.onlyMale, settings.onlyFemale], forKey: "filterSettings")
     }
 }
 
 
 extension ViewController: EditStudentDelegate{
     func saveNewProperties(index:Int, name: String, rating: String, gender: String, prolile: String?) {
-        //filteredData[index].changeProperties(name, rating, gender, prolile)
-        
-        //defaults.set(saveStudents(studentsList: filteredData), forKey: "ListOfStudents")
         students[index].changeProperties(name, rating, gender, prolile)
         self.saveStudent()
     }

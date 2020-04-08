@@ -20,7 +20,15 @@ class FilterViewController: UIViewController {
     
     @IBOutlet weak var applyButton: UIButton!
     
+    
+    enum Switch: String{
+        case onlyNerds
+        case onlyMale
+        case onlyFemale
+    }
+    
     var filtersDelegate: ApplyFiltersDelegate!
+    var defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,15 +54,14 @@ class FilterViewController: UIViewController {
     }
     
     func saveSettings(){
-        UserSettings.filterSettings = [onlyNerdsSwitch.isOn,
-                                       onlyMaleSwitch.isOn,
-                                       onlyFemaleSwitch.isOn]
-
+        defaults.set(onlyNerdsSwitch.isOn, forKey: Switch.onlyNerds.rawValue)
+        defaults.set(onlyMaleSwitch.isOn, forKey: Switch.onlyMale.rawValue)
+        defaults.set(onlyFemaleSwitch.isOn, forKey: Switch.onlyFemale.rawValue)
     }
     
     func checkSettings(){
-        onlyNerdsSwitch.isOn = UserSettings.filterSettings[0]
-        onlyMaleSwitch.isOn = UserSettings.filterSettings[1]
-        onlyFemaleSwitch.isOn = UserSettings.filterSettings[2]
+        onlyNerdsSwitch.isOn = defaults.bool(forKey: Switch.onlyNerds.rawValue)
+        onlyMaleSwitch.isOn = defaults.bool(forKey: Switch.onlyMale.rawValue)
+        onlyFemaleSwitch.isOn = defaults.bool(forKey: Switch.onlyFemale.rawValue)
     }
 }
