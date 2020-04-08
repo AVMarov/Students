@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ApplyFiltersDelegate {
-    func applyFilters(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool)
+    func applyFilters(settings: (onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool))
 }
 
 class FilterViewController: UIViewController {
@@ -39,21 +39,26 @@ class FilterViewController: UIViewController {
     }
         
     @IBAction func tapButton(_ sender: UIButton) {
-        filtersDelegate.applyFilters(onlyNerds: onlyNerdsSwitch.isOn, onlyMale: onlyMaleSwitch.isOn, onlyFemale: onlyFemaleSwitch.isOn)
+        filtersDelegate.applyFilters(settings: (onlyNerds: onlyNerdsSwitch.isOn,
+                                                onlyMale: onlyMaleSwitch.isOn,
+                                                onlyFemale: onlyFemaleSwitch.isOn))
         saveSettings()
         self.dismiss(animated: true, completion: nil)
     }
     
     func saveSettings(){
-        defaults.set(onlyNerdsSwitch.isOn, forKey: "onlyNerds")
-        defaults.set(onlyMaleSwitch.isOn, forKey: "onlyMale")
-        defaults.set(onlyFemaleSwitch.isOn, forKey: "onlyFemale")
+        defaults.set([onlyNerdsSwitch.isOn,
+                      onlyMaleSwitch.isOn,
+                      onlyFemaleSwitch.isOn],
+                     forKey: "settings")
+
     }
     
     func checkSettings(){
-        onlyNerdsSwitch.isOn = defaults.bool(forKey: "onlyNerds")
-        onlyMaleSwitch.isOn = defaults.bool(forKey: "onlyMale")
-        onlyFemaleSwitch.isOn = defaults.bool(forKey: "onlyFemale")
+       let arrSettings = defaults.object(forKey: "settings") as? [Bool] ?? [false, false, false]
+        onlyNerdsSwitch.isOn = arrSettings[0]
+        onlyMaleSwitch.isOn = arrSettings[1]
+        onlyFemaleSwitch.isOn = arrSettings[2]
     }
 
 }

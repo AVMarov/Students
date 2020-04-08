@@ -195,8 +195,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
 
 //Extension for apply filters
 extension ViewController: ApplyFiltersDelegate{
-    func applyFilters(onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool) {
-        filterTheData(settings: (onlyNerds, onlyMale, onlyFemale))
+    func applyFilters(settings: (onlyNerds: Bool, onlyMale: Bool, onlyFemale: Bool)) {
+        filterTheData(settings: settings)
     }
 }
 
